@@ -94,16 +94,16 @@
 <meta property="og:url" content="http://lukeliou.github.io/2018/09/16/miniProgram/index.html">
 <meta property="og:site_name" content="Luke&#39;s Blog">
 <meta property="og:description" content="前段时间博主研究了下微信小程序，写了个demo。现在回过头来整理下笔记，记录所遇到的坑。">
-<meta property="og:image" content="http://lukeliou.github.io/.io//%5Cimages%5Cpic%5Cerror.png">
-<meta property="og:image" content="http://lukeliou.github.io/.io//%5Cimages%5Cpic%5Cwarning.png">
-<meta property="og:image" content="http://lukeliou.github.io/.io//%5Cimages%5Cpic%5Ceg.png">
-<meta property="og:image" content="http://lukeliou.github.io/.io//%5Cimages%5Cpic%5Ceg2.png">
+<meta property="og:image" content="http://lukeliou.github.io/images/error.png">
+<meta property="og:image" content="http://lukeliou.github.io/images/warning.png">
+<meta property="og:image" content="http://lukeliou.github.io/images/eg.png">
+<meta property="og:image" content="http://lukeliou.github.io/images/eg2.png">
 <meta property="article:published_time" content="2018-09-16T05:53:00.000Z">
-<meta property="article:modified_time" content="2021-03-28T03:09:24.437Z">
+<meta property="article:modified_time" content="2021-03-28T11:03:00.673Z">
 <meta property="article:author" content="Luke">
 <meta property="article:tag" content="小程序">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://lukeliou.github.io/.io//%5Cimages%5Cpic%5Cerror.png">
+<meta name="twitter:image" content="http://lukeliou.github.io/images/error.png">
 
 
 
@@ -451,7 +451,7 @@
 <li><h1 id="页面跳转传参数据：json-字符串转对象报错"><a href="#页面跳转传参数据：json-字符串转对象报错" class="headerlink" title="页面跳转传参数据：json 字符串转对象报错"></a>页面跳转传参数据：json 字符串转对象报错</h1><p>小程序的X页面向Y页面跳转的时候，传了页面参数为args（页面参数值只能是字符串，参数值是根据用户点击的信息而不同的），所以传数组或对象需要使用<code>JSON.stringify()</code>转换，到了Y页面需要将param获取到并通过<code>JSON.parse()</code>解析，结果问题是有些传过来json正常解析，有些则报这个错(json 字符串转对象报错)</p>
 </li>
 </ul>
-<p><img src="/.io//%5Cimages%5Cpic%5Cerror.png" alt="json 字符串转对象报错截图"></p>
+<p><img src="/images/error.png" alt="json 字符串转对象报错截图"></p>
 <p><strong><code>报错原因⬇</code></strong></p>
 <ul>
 <li>微信小程序限制了页面间跳转传参的长度，导致数据缺失。</li>
@@ -467,7 +467,7 @@
 <li><h1 id="使用wx-for出现如下warning"><a href="#使用wx-for出现如下warning" class="headerlink" title="使用wx:for出现如下warning:"></a>使用wx:for出现如下warning:</h1><pre><code>Now you can provide attr &quot;wx:key&quot; for a &quot;wx:for&quot; to improve performance.</code></pre><p>小程序的X页面向Y页面跳转的时候，传了页面参数为args（页面参数值只能是字符串，参数值是根据用户点击的信息而不同的），所以传数组或对象需要使用<code>JSON.stringify()</code>转换，到了Y页面需要将param获取到并通过<code>JSON.parse()</code>解析，结果问题是有些传过来json正常解析，有些则报这个错(json 字符串转对象报错)</p>
 </li>
 </ul>
-<p><img src="/.io//%5Cimages%5Cpic%5Cwarning.png" alt="json 字符串转对象报错截图"></p>
+<p><img src="/images/warning.png" alt="json 字符串转对象报错截图"></p>
 <p><strong><code>报错原因⬇</code></strong></p>
 <ul>
 <li><p>官方解释：<br>wx:key<br>如果列表中项目的位置会动态改变或者有新的项目添加到列表中，并且希望列表中的项目保持自己的特征和状态（如 <code>&lt;input/&gt;</code> 中的输入内容，<code>&lt;switch/&gt;</code> 的选中状态），需要使用 wx:key 来指定列表中项目的唯一的标识符。</p>
@@ -479,7 +479,7 @@
 <ul>
 <li>推荐array 的 每一个item都添加一个唯一识别的property来管理</li>
 </ul>
-<p><strong><code>Eg⬇</code></strong><br>        <text class="new_title" wx:for-items wx:key="title"></text></p>
+<p><strong><code>Eg⬇</code></strong><br>        <text class="new_title" wx:for-items='' wx:key='title'></text></p>
 <hr>
 <p><strong><code>问题详情⬇</code></strong></p>
 <ul>
@@ -487,7 +487,7 @@
 </ul>
 <p><strong><code>设置如下⬇</code></strong></p>
 <ul>
-<li><p>主体部分：<br><img src="/.io//%5Cimages%5Cpic%5Ceg.png" alt="json 字符串转对象报错截图"></p>
+<li><p>主体部分：<br><img src="/images/eg.png" alt="json 字符串转对象报错截图"></p>
 <pre>
 app.json -> “window”: {“navigationBarBackgroundColor”: “#EEE”}
 app.json -> “window”: {“backgroundColor”: “#33CCFF”}
@@ -504,7 +504,7 @@ app.wxss 设置全局内容样式 .content {background-color: “#CCFF00”}
 <li><p>底部菜单：<br>解决办法是在页面的.wxss里设置（注意，page前没有点）：</p>
 <pre>page { background-color: #fef2dc; }</pre></li>
 <li><p>主体部分：</p>
-<p>在app.json中设置了tarBar，就会出现底部菜单，如下图<br><img src="/.io//%5Cimages%5Cpic%5Ceg2.png" alt="json 字符串转对象报错截图"></p>
+<p>在app.json中设置了tarBar，就会出现底部菜单，如下图<br><img src="/images/eg2.png" alt="json 字符串转对象报错截图"></p>
 <p>  底部菜单的背景颜色设置在app.json中：</p>
 <pre>
 "tabBar": {"backgroundColor": "#fff9e9"}
@@ -553,7 +553,49 @@ app.wxss 设置全局内容样式 .content {background-color: “#CCFF00”}
     
 
     
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>赞赏一杯咖啡</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
 
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatCheck.JPG" alt="Luke 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Luke
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://lukeliou.github.io/2018/09/16/miniProgram/" title="微信小程序-填坑-初级入门（不定期更新）">http://lukeliou.github.io/2018/09/16/miniProgram/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
     
 
     <footer class="post-footer">

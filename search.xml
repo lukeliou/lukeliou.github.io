@@ -10,7 +10,7 @@
 <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>&emsp;&emsp;随着时间推移，前后端开发渐趋分离，这种开发方式大大提高了前后端项目的可维护性与开发效率，这也使得前后端开发者更关注自己的开发工作。</p>
 <p>&emsp;&emsp;但由于在各个不同场景以及公司、客户日益增长的需求，程序猿们也在开发过程中，遇到些问题：比如首屏渲染时间(<code>FCP</code>)因为首屏需要请求更多内容，比原来多了更多HTTP的往返时间(RTT)，这造成了白屏，如果白屏时间过长，<code>用户体验</code>会大打折扣，如果用户网速差，则FCP会更长。</p>
 <p>&emsp;&emsp;由此引申出一系列的优化方法，<code>骨架屏</code>也因此被提出。</p>
-<p><img src="/.io//%5Cimages%5Clogo.png" alt="效果"></p>
+<p><img src="/images/logo.jpg" alt="效果"></p>
 <p>&emsp;&emsp;为了优化首屏渲染时间这个指标，减少白屏时间，前端的程序猿们想了很多办法</p>
 <ul>
 <li>加速或减少HTTP请求损耗：使用CDN加载公用库，使用强缓存和协商缓存，使用域名收敛，小图片使用Base64代替，使用Get请求代替Post请求，</li>
@@ -20,10 +20,10 @@
 <li>优化用户等待体验：白屏使用加载进度条、菊花图、骨架屏代替等；</li>
 </ul>
 <p><code>注</code>：我们可以简单将骨架屏是传统加载进度条和菊花图的升级版。</p>
-<p><img src="/.io//%5Cimages%5Cpic%5Cskeleton2.gif" alt="我们可以简单将骨架屏是传统加载进度条和菊花图的升级版"></p>
+<p><img src="/images/skeleton2.gif" alt="我们可以简单将骨架屏是传统加载进度条和菊花图的升级版"></p>
 <h1 id="举个栗子"><a href="#举个栗子" class="headerlink" title="举个栗子"></a>举个栗子</h1><p> &emsp;&emsp;脸书的骨架屏，在页面完全渲染完成之前，用户会看到一个样式简单，描绘了当前页面的大致框架的骨架屏页面，然后骨架屏中各个占位部分被实际资源完全替换，这个过程中用户会觉得内容正在逐渐加载即将呈现，降低了用户的焦躁情绪，使得加载过程主观上变得流畅。</p>
 <ul>
-<li><strong>效果⬇</strong><br><img src="/.io//%5Cimages%5Cpic%5Cskeleton.gif" alt="效果"></li>
+<li><strong>效果⬇</strong><br><img src="/images/skeleton.gif" alt="效果"></li>
 </ul>
 <h1 id="划重点：生成骨架屏的方法"><a href="#划重点：生成骨架屏的方法" class="headerlink" title="划重点：生成骨架屏的方法"></a>划重点：生成骨架屏的方法</h1><ul>
 <li><h2 id="手写HTML、CSS的方式为目标页定制骨架屏"><a href="#手写HTML、CSS的方式为目标页定制骨架屏" class="headerlink" title="手写HTML、CSS的方式为目标页定制骨架屏"></a>手写HTML、CSS的方式为目标页定制骨架屏</h2><p>&emsp;&emsp;主要思路就是使用 vue-server-renderer 这个本来用于服务端渲染的插件，用来把我们写的.vue文件处理为HTML，插入到页面模板的挂载点中，完成骨架屏的注入。这种方式不甚文明，如果页面样式改变了，还得改一遍骨架屏，增加了维护成本</p>
@@ -54,7 +54,7 @@
 </li>
 <li><p>build目录下，修改<code>webpack.prod.conf.js</code>,<code>webpack.dev.conf.js</code></p>
 </li>
-<li><p><strong>项目目录结构⬇</strong><br><img src="/.io//%5Cimages%5Cpic%5Clist.png" alt="项目目录结构"></p>
+<li><p><strong>项目目录结构⬇</strong><br><img src="%5Cimages%5Cpic%5Clist.png" alt="项目目录结构"></p>
 </li>
 <li><p><strong>为对应文件编写内容⬇</strong></p>
 <ul>
@@ -77,12 +77,12 @@
 <p>  完整文件：<br>  <code>webpack.prod.conf.js</code>⬇</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#39;use strict&#39;</span><br><span class="line">const path &#x3D; require(&#39;path&#39;)</span><br><span class="line">const utils &#x3D; require(&#39;.&#x2F;utils&#39;)</span><br><span class="line">const webpack &#x3D; require(&#39;webpack&#39;)</span><br><span class="line">const config &#x3D; require(&#39;..&#x2F;config&#39;)</span><br><span class="line">const merge &#x3D; require(&#39;webpack-merge&#39;)</span><br><span class="line">const baseWebpackConfig &#x3D; require(&#39;.&#x2F;webpack.base.conf&#39;)</span><br><span class="line">const CopyWebpackPlugin &#x3D; require(&#39;copy-webpack-plugin&#39;)</span><br><span class="line">const HtmlWebpackPlugin &#x3D; require(&#39;html-webpack-plugin&#39;)</span><br><span class="line">const ExtractTextPlugin &#x3D; require(&#39;extract-text-webpack-plugin&#39;)</span><br><span class="line">const OptimizeCSSPlugin &#x3D; require(&#39;optimize-css-assets-webpack-plugin&#39;)</span><br><span class="line">const UglifyJsPlugin &#x3D; require(&#39;uglifyjs-webpack-plugin&#39;)</span><br><span class="line"></span><br><span class="line">const SkeletonWebpackPlugin &#x3D; require(&#39;vue-skeleton-webpack-plugin&#39;)</span><br><span class="line"></span><br><span class="line">const env &#x3D; process.env.NODE_ENV &#x3D;&#x3D;&#x3D; &#39;testing&#39; ?</span><br><span class="line">    require(&#39;..&#x2F;config&#x2F;test.env&#39;) :</span><br><span class="line">    require(&#39;..&#x2F;config&#x2F;prod.env&#39;)</span><br><span class="line"></span><br><span class="line">const webpackConfig &#x3D; merge(baseWebpackConfig, &#123;</span><br><span class="line">    module: &#123;</span><br><span class="line">        rules: utils.styleLoaders(&#123;</span><br><span class="line">            sourceMap: config.build.productionSourceMap,</span><br><span class="line">            extract: true,</span><br><span class="line">            usePostCSS: true</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;,</span><br><span class="line">    devtool: config.build.productionSourceMap ? config.build.devtool : false,</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: config.build.assetsRoot,</span><br><span class="line">        filename: utils.assetsPath(&#39;js&#x2F;[name].[chunkhash].js&#39;),</span><br><span class="line">        chunkFilename: utils.assetsPath(&#39;js&#x2F;[id].[chunkhash].js&#39;)</span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">        &#x2F;&#x2F; http:&#x2F;&#x2F;vuejs.github.io&#x2F;vue-loader&#x2F;en&#x2F;workflow&#x2F;production.html</span><br><span class="line">        new webpack.DefinePlugin(&#123;</span><br><span class="line">            &#39;process.env&#39;: env</span><br><span class="line">        &#125;),</span><br><span class="line">        new UglifyJsPlugin(&#123;</span><br><span class="line">            uglifyOptions: &#123;</span><br><span class="line">                compress: &#123;</span><br><span class="line">                    warnings: false</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            sourceMap: config.build.productionSourceMap,</span><br><span class="line">            parallel: true</span><br><span class="line">        &#125;),</span><br><span class="line">        &#x2F;&#x2F; extract css into its own file</span><br><span class="line">        new ExtractTextPlugin(&#123;</span><br><span class="line">            filename: utils.assetsPath(&#39;css&#x2F;[name].[contenthash].css&#39;),</span><br><span class="line">            &#x2F;&#x2F; Setting the following option to &#96;false&#96; will not extract CSS from codesplit chunks.</span><br><span class="line">            &#x2F;&#x2F; Their CSS will instead be inserted dynamically with style-loader when the codesplit chunk has been loaded by webpack.</span><br><span class="line">            &#x2F;&#x2F; It&#39;s currently set to &#96;true&#96; because we are seeing that sourcemaps are included in the codesplit bundle as well when it&#39;s &#96;false&#96;, </span><br><span class="line">            &#x2F;&#x2F; increasing file size: https:&#x2F;&#x2F;github.com&#x2F;vuejs-templates&#x2F;webpack&#x2F;issues&#x2F;1110</span><br><span class="line">            allChunks: true,</span><br><span class="line">        &#125;),</span><br><span class="line">        &#x2F;&#x2F; Compress extracted CSS. We are using this plugin so that possible</span><br><span class="line">        &#x2F;&#x2F; duplicated CSS from different components can be deduped.</span><br><span class="line">        new OptimizeCSSPlugin(&#123;</span><br><span class="line">            cssProcessorOptions: config.build.productionSourceMap ? &#123; safe: true, map: &#123; inline: false &#125; &#125; : &#123; safe: true &#125;</span><br><span class="line">        &#125;),</span><br><span class="line">        &#x2F;&#x2F; generate dist index.html with correct asset hash for caching.</span><br><span class="line">        &#x2F;&#x2F; you can customize output by editing &#x2F;index.html</span><br><span class="line">        &#x2F;&#x2F; see https:&#x2F;&#x2F;github.com&#x2F;ampedandwired&#x2F;html-webpack-plugin</span><br><span class="line">        new HtmlWebpackPlugin(&#123;</span><br><span class="line">            filename: process.env.NODE_ENV &#x3D;&#x3D;&#x3D; &#39;testing&#39; ?</span><br><span class="line">                &#39;index.html&#39; : config.build.index,</span><br><span class="line">            template: &#39;index.html&#39;,</span><br><span class="line">            inject: true,</span><br><span class="line">            minify: &#123;</span><br><span class="line">                removeComments: true,</span><br><span class="line">                collapseWhitespace: true,</span><br><span class="line">                removeAttributeQuotes: true</span><br><span class="line">                    &#x2F;&#x2F; more options:</span><br><span class="line">                    &#x2F;&#x2F; https:&#x2F;&#x2F;github.com&#x2F;kangax&#x2F;html-minifier#options-quick-reference</span><br><span class="line">            &#125;,</span><br><span class="line">            &#x2F;&#x2F; necessary to consistently work with multiple chunks via CommonsChunkPlugin</span><br><span class="line">            chunksSortMode: &#39;dependency&#39;</span><br><span class="line">        &#125;),</span><br><span class="line">        &#x2F;&#x2F; keep module.id stable when vendor modules does not change</span><br><span class="line">        new webpack.HashedModuleIdsPlugin(),</span><br><span class="line">        &#x2F;&#x2F; enable scope hoisting</span><br><span class="line">        new webpack.optimize.ModuleConcatenationPlugin(),</span><br><span class="line">        &#x2F;&#x2F; split vendor js into its own file</span><br><span class="line">        new webpack.optimize.CommonsChunkPlugin(&#123;</span><br><span class="line">            name: &#39;vendor&#39;,</span><br><span class="line">            minChunks(module) &#123;</span><br><span class="line">                &#x2F;&#x2F; any required modules inside node_modules are extracted to vendor</span><br><span class="line">                return (</span><br><span class="line">                    module.resource &amp;&amp;</span><br><span class="line">                    &#x2F;\.js$&#x2F;.test(module.resource) &amp;&amp;</span><br><span class="line">                    module.resource.indexOf(</span><br><span class="line">                        path.join(__dirname, &#39;..&#x2F;node_modules&#39;)</span><br><span class="line">                    ) &#x3D;&#x3D;&#x3D; 0</span><br><span class="line">                )</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;),</span><br><span class="line">        &#x2F;&#x2F; extract webpack runtime and module manifest to its own file in order to</span><br><span class="line">        &#x2F;&#x2F; prevent vendor hash from being updated whenever app bundle is updated</span><br><span class="line">        new webpack.optimize.CommonsChunkPlugin(&#123;</span><br><span class="line">            name: &#39;manifest&#39;,</span><br><span class="line">            minChunks: Infinity</span><br><span class="line">        &#125;),</span><br><span class="line">        &#x2F;&#x2F; This instance extracts shared chunks from code splitted chunks and bundles them</span><br><span class="line">        &#x2F;&#x2F; in a separate chunk, similar to the vendor chunk</span><br><span class="line">        &#x2F;&#x2F; see: https:&#x2F;&#x2F;webpack.js.org&#x2F;plugins&#x2F;commons-chunk-plugin&#x2F;#extra-async-commons-chunk</span><br><span class="line">        new webpack.optimize.CommonsChunkPlugin(&#123;</span><br><span class="line">            name: &#39;app&#39;,</span><br><span class="line">            async: &#39;vendor-async&#39;,</span><br><span class="line">            children: true,</span><br><span class="line">            minChunks: 3</span><br><span class="line">        &#125;),</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; copy custom static assets</span><br><span class="line">        new CopyWebpackPlugin([&#123;</span><br><span class="line">            from: path.resolve(__dirname, &#39;..&#x2F;static&#39;),</span><br><span class="line">            to: config.build.assetsSubDirectory,</span><br><span class="line">            ignore: [&#39;.*&#39;]</span><br><span class="line">        &#125;]),</span><br><span class="line">        &#x2F;&#x2F; inject skeleton content(DOM &amp; CSS) into HTML</span><br><span class="line">        new SkeletonWebpackPlugin(&#123;</span><br><span class="line">            webpackConfig: require(&#39;.&#x2F;webpack.skeleton.conf&#39;),</span><br><span class="line">            quiet: true</span><br><span class="line">        &#125;)</span><br><span class="line">    ]</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">if (config.build.productionGzip) &#123;</span><br><span class="line">    const CompressionWebpackPlugin &#x3D; require(&#39;compression-webpack-plugin&#39;)</span><br><span class="line"></span><br><span class="line">    webpackConfig.plugins.push(</span><br><span class="line">        new CompressionWebpackPlugin(&#123;</span><br><span class="line">            asset: &#39;[path].gz[query]&#39;,</span><br><span class="line">            algorithm: &#39;gzip&#39;,</span><br><span class="line">            test: new RegExp(</span><br><span class="line">                &#39;\\.(&#39; +</span><br><span class="line">                config.build.productionGzipExtensions.join(&#39;|&#39;) +</span><br><span class="line">                &#39;)$&#39;</span><br><span class="line">            ),</span><br><span class="line">            threshold: 10240,</span><br><span class="line">            minRatio: 0.8</span><br><span class="line">        &#125;)</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if (config.build.bundleAnalyzerReport) &#123;</span><br><span class="line">    const BundleAnalyzerPlugin &#x3D; require(&#39;webpack-bundle-analyzer&#39;).BundleAnalyzerPlugin</span><br><span class="line">    webpackConfig.plugins.push(new BundleAnalyzerPlugin())</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">module.exports &#x3D; webpackConfig</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>根目录下执行<code>npm run dev</code>，chrome浏览器下调试network为<code>slow 3G</code>模式，<strong>效果⬇</strong><br><img src="/.io//%5Cimages%5Cpic%5Ceg.gif" alt="效果"></p>
+<li><p>根目录下执行<code>npm run dev</code>，chrome浏览器下调试network为<code>slow 3G</code>模式，<strong>效果⬇</strong><br><img src="/images/eg.gif" alt="效果"></p>
 </li>
 </ul>
 <p>另：</p>
 <ul>
-<li>demo源码下载，请戳<a href="https://github.com/fqLiou/skeleton-vueDemo" target="_blank" rel="noopener" title="demo源码下载">这里</a></li>
+<li>demo源码下载，请戳<a href="https://github.com/LukeLiou/skeleton-vueDemo" target="_blank" rel="noopener" title="demo源码下载">这里</a></li>
 </ul>
 ]]></content>
       <categories>
@@ -95,287 +95,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux下安装webpack，打包部署，端口映射，实现域名访问</title>
-    <url>/2018/11/06/Linux%E4%B8%8B%E5%AE%89%E8%A3%85webpack%EF%BC%8C%E6%89%93%E5%8C%85%E9%83%A8%E7%BD%B2%EF%BC%8C%E5%AE%9E%E7%8E%B0%E5%9F%9F%E5%90%8D%E8%AE%BF%E9%97%AE/</url>
-    <content><![CDATA[<p>晚十一点一刻，好记性不如烂笔头，接着昨晚的进程，咱们今天说说Linux下安装webpack，打包部署，端口映射，实现域名访问。</p>
-<a id="more"></a>
-
-<p>另：</p>
-<ul>
-<li><p>想了解在Linux下,命令行部署http-server的同学可以戳<a href="https://liou.site/2018/11/05/ssh%E8%BF%9E%E6%8E%A5Linux-%E9%83%A8%E7%BD%B2http-server/#more" target="_blank" rel="noopener" title="Linux下,命令行部署http-server">这里</a></p>
-</li>
-<li><p><del>之前的<code>demo</code>文件夹重命名为了<code>myWebpack</code></del></p>
-</li>
-<li><p>新建文件夹，名字自定义为<code>webpack</code>。</p>
-</li>
-</ul>
-<p>还是老规矩，先连接至远端服务器。</p>
-<h1 id="使用账户名和密码进行ssh连接"><a href="#使用账户名和密码进行ssh连接" class="headerlink" title="使用账户名和密码进行ssh连接"></a>使用账户名和密码进行ssh连接</h1><ul>
-<li><p><strong>命令⬇</strong></p>
-<pre>
-  ssh root@xx.xx.xxx.xxx
-</pre>
-
-<p><code>xx.xx.xxx.xxx ➡ ur remote server ip</code></p>
-</li>
-<li><p><strong>效果⬇</strong><br><img src="/.io//%5Cimages%5Cpic%5Cserver.png" alt="使用账户名和密码进行ssh连接"></p>
-</li>
-</ul>
-<h1 id="使用npm安装Webpack"><a href="#使用npm安装Webpack" class="headerlink" title="使用npm安装Webpack"></a>使用npm安装Webpack</h1><p> 在自己用户权限下，之前的myWebpack文件夹下，执行npm安装</p>
-<ul>
-<li><p><strong>命令⬇</strong></p>
-<pre>//全局安装
-npm install -g webpack
-//安装到你的项目目录
-npm install --save-dev webpack
-</pre>
-
-<p>博主选择的是全局安装，此时会生成<code>package.json</code>文件，如果没有，可以用指令<code>touch package.json</code>创建,或者用<code>npm init</code>或者<code>npm init –y</code>自动生成</p>
-<p>如果输入<code>npm init</code>后，终端会问你一系列诸如项目名称，项目描述，作者等信息，不过不用担心，如果你不准备在npm中发布你的模块，这些问题的答案都不重要，回车默认即可</p>
-</li>
-<li><p><strong>效果⬇</strong><br><img src="/.io//%5Cimages%5Cpic%5Cwebpack6.png" alt="效果"></p>
-<p><code>但是</code>如果你遇到如下报错： </p>
-<pre>
-npm ERR! code ENOSELF
-npm ERR! Refusing to install package with name "express" under a package
-npm ERR! also called "express". Did you name your project the same
-npm ERR! as the dependency you're installing?
-npm ERR!
-npm ERR! For more information, see:
-npm ERR!
-</pre>
-
-<p>请采取修改<code>package.json</code>的<code>name</code>字段（我这里修改成<code>webpack-test</code>）,这样就安装成功，项目根目录下生成了<code>node_modules</code>等文件夹</p>
-<ul>
-<li><strong>效果⬇</strong></li>
-</ul>
-</li>
-</ul>
-<p><img src="/.io//%5Cimages%5Cpic%5Cwebpack1-done.png" alt="效果"></p>
-<h1 id="正式使用Webpack前的准备"><a href="#正式使用Webpack前的准备" class="headerlink" title="正式使用Webpack前的准备"></a>正式使用Webpack前的准备</h1><h2 id="安装Webpack"><a href="#安装Webpack" class="headerlink" title="安装Webpack"></a>安装Webpack</h2><p>package.json文件已就绪，在本项目中安装Webpack作为依赖包</p>
-<ul>
-<li><p><strong>命令⬇</strong></p>
-<pre>
-// 安装Webpack
-npm install --save-dev webpack
-</pre>
-</li>
-<li><p><strong>详情⬇</strong></p>
-<ul>
-<li><p>回到项目根文件夹，并在里面创建两个文件夹,app文件夹和public文件夹。</p>
-</li>
-<li><p>app文件夹用来存放原始数据和我们将写的JavaScript模块，public文件夹用来存放之后供浏览器读取的文件（包括使用webpack打包生成的js文件以及一个index.html文件）。</p>
-</li>
-<li><p>接下来我们再创建三个文件:</p>
-<ul>
-<li><code>index.html</code> –放在public文件夹中;</li>
-<li><code>Greeter.js</code>– 放在app文件夹中;</li>
-<li><code>main.js</code>– 放在app文件夹中;</li>
-</ul>
-</li>
-<li><p><strong>项目目录结构⬇</strong><br><img src="/.io//%5Cimages%5Cpic%5Cwebpack.png" alt="项目目录结构"></p>
-</li>
-<li><p><strong>为各个文件添加内容⬇</strong></p>
-</li>
-<li><p>编辑index.html⬇</p>
-<p>  我们在index.html文件中写入最基础的html代码，它在这里目的在于引入打包后的js文件（这里先把之后打包后的js文件命名为bundle.js，之后还会详细讲述）</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;!-- index.html --&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;&lt;html lang&#x3D;&quot;en&quot;&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;meta charset&#x3D;&quot;utf-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Webpack Sample Project&lt;&#x2F;title&gt;</span><br><span class="line">  &lt;&#x2F;head&gt;</span><br><span class="line">  &lt;body&gt;</span><br><span class="line">    &lt;div id&#x3D;&#39;root&#39;&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">    &lt;script src&#x3D;&quot;bundle.js&quot;&gt;&lt;&#x2F;script&gt;</span><br><span class="line">  &lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>编辑Greeter.js⬇</p>
-<p>  在Greeter.js中定义一个返回包含问候信息的html元素的函数,并依据CommonJS规范导出这个函数为一个模块：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; Greeter.js</span><br><span class="line">module.exports &#x3D; function() &#123;</span><br><span class="line">  var greet &#x3D; document.createElement(&#39;div&#39;);</span><br><span class="line">  greet.textContent &#x3D; &quot;Hi there and greetings!&quot;;</span><br><span class="line">  return greet;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>编辑main.js⬇</p>
-<p>  main.js文件中写入下述代码，用以把Greeter模块返回的节点插入页面</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;main.js </span><br><span class="line">const greeter &#x3D; require(&#39;.&#x2F;Greeter.js&#39;);</span><br><span class="line">document.querySelector(&quot;#root&quot;).appendChild(greeter());</span><br></pre></td></tr></table></figure>
-
-
-
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="安装webpack-cli"><a href="#安装webpack-cli" class="headerlink" title="安装webpack-cli"></a>安装webpack-cli</h2><p><code>在webpack4的版本里，CLI被单独分离出来了所以要我们单独安装  执行全局命令 npm i -g webpack-cli 安装完脚手架</code></p>
-<p>博主这里选择全局安装</p>
-<ul>
-<li><pre>npm install --save-dev webpack-cli -g</pre>
-
-
-</li>
-</ul>
-<p>webpack4.x中打包默认找src/index.js作为默认入口，可以直接在终端中输入命令<code>webpack</code> 将当前的内容进行一个简单的打包</p>
-<p><strong>效果⬇</strong><br><img src="/.io//%5Cimages%5Cpic%5Cwebpack2.1.4.png" alt="webpack"></p>
-<p>我们可以看到打包的时候终端中会出现黄色的<code>警告提示</code>，这是因为：mode是webpack中独有的，有两种打包环境，一个是开发环境：development；另外一个是生产环境：production</p>
-<p>我们可以采用两种方式：</p>
-<p>第一种：打包时候输入<code>webpack --mode=development</code>或者<code>webpack --mode=production</code><br>第二种：<code>package.json</code>文件中添加配置项</p>
-<p>下面贴出第二种（<code>package.json</code>文件中添加配置项）详细步骤</p>
-<ul>
-<li>在<code>package.json</code>文件中添加配置项<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;scripts&quot;: &#123;  </span><br><span class="line">  &quot;dev&quot;: &quot;webpack --mode development&quot;,  </span><br><span class="line">  &quot;build&quot;: &quot;webpack --mode production&quot;  </span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure></li>
-<li><code>package.json</code>文件内容为：</li>
-</ul>
-<p><img src="/.io//%5Cimages%5Cpic%5Cwebpack2.1.3.png" alt="package.json"></p>
-<h2 id="创建webpack-config-js并编辑"><a href="#创建webpack-config-js并编辑" class="headerlink" title="创建webpack.config.js并编辑"></a>创建<code>webpack.config.js</code>并编辑</h2><ul>
-<li><pre>touch webpack.config.js</pre>
-</li>
-<li><pre>vi webpack.config.js</pre>
-
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;webpack.config.js</span><br><span class="line">module.exports &#x3D; &#123;</span><br><span class="line">  mode: &quot;development&quot;,</span><br><span class="line">  entry:  __dirname + &quot;&#x2F;app&#x2F;main.js&quot;,&#x2F;&#x2F;已多次提及的唯一入口文件</span><br><span class="line">  output: &#123;</span><br><span class="line">    path: __dirname + &quot;&#x2F;public&quot;,&#x2F;&#x2F;打包后的文件存放的地方</span><br><span class="line">    filename: &quot;bundle.js&quot;&#x2F;&#x2F;打包后输出文件的文件名</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-<br>
-
-<h1 id="正式使用Webpack"><a href="#正式使用Webpack" class="headerlink" title="正式使用Webpack"></a>正式使用Webpack</h1><h2 id="在终端中使用Webpack"><a href="#在终端中使用Webpack" class="headerlink" title="在终端中使用Webpack"></a>在终端中使用Webpack</h2><p>基本的使用方法如下：</p>
-<pre>
-# {extry file}出填写入口文件的路径，本文中就是上述main.js的路径，
-# {destination for bundled file}处填写打包文件的存放路径
-# 填写路径的时候不用添加{}
-webpack {entry file} {destination for bundled file}
-</pre>
-
-<p>拿博主写的为例：（在项目根目录下执行）</p>
-<pre>webpack app/main.js</pre>
-
-<p><strong>效果⬇</strong><br><img src="/.io//%5Cimages%5Cpic%5Cwebpack2.1.png" alt="在终端中使用webpack"></p>
-<p>指定入口文件后，webpack将自动识别项目所依赖的其它文件，不过需要注意的是如果你的webpack不是全局安装的，那么当你在终端中使用此命令时，需要额外指定其在node_modules中的地址，继续上面的例子，在终端中输入如下命令</p>
-<pre>
-# webpack非全局安装的情况
-node_modules/.bin/webpack app/main.js public/bundle.js
-</pre>
-
-<p><strong>效果⬇</strong></p>
-<p><img src="/.io//%5Cimages%5Cpic%5Cwebpack2.png" alt="在终端中使用webpack"></p>
-<p>可以看出webpack同时编译了main.js 和Greeter,js,现在浏览器打开index.html</p>
-<h2 id="通过配置文件来使用Webpack"><a href="#通过配置文件来使用Webpack" class="headerlink" title="通过配置文件来使用Webpack"></a>通过配置文件来使用Webpack</h2><p>Webpack拥有很多其它的比较高级的功能（比如说本文后面会介绍的loaders和plugins），这些功能其实都可以通过命令行模式实现，但是正如前面提到的，这样不太方便且容易出错的，更好的办法是定义一个配置文件，这个配置文件其实也是一个简单的JavaScript模块，我们可以把所有的与打包相关的信息放在里面。</p>
-<p>继续上面的例子来说明如何写这个配置文件，在当前练习文件夹的根目录下新建一个名为<code>webpack.config.js</code>的文件，我们在其中写入如下所示的简单配置代码，目前的配置主要涉及到的内容是入口文件路径和打包后文件的存放路径。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module.exports &#x3D; &#123;</span><br><span class="line">  mode: &quot;development&quot;,</span><br><span class="line">  entry:  __dirname + &quot;&#x2F;app&#x2F;main.js&quot;,&#x2F;&#x2F;已多次提及的唯一入口文件</span><br><span class="line">  output: &#123;</span><br><span class="line">    path: __dirname + &quot;&#x2F;public&quot;,&#x2F;&#x2F;打包后的文件存放的地方</span><br><span class="line">    filename: &quot;bundle.js&quot;&#x2F;&#x2F;打包后输出文件的文件名</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>注：“__dirname”是node.js中的一个全局变量，它指向当前执行脚本所在的目录。</code></p>
-<p>有了这个配置之后，再打包文件，只需在终端里运行webpack(非全局安装需使用node_modules/.bin/webpack)命令就可以了，这条命令会自动引用webpack.config.js文件中的配置选项，示例如下：</p>
-<p><img src="/.io//%5Cimages%5Cpic%5Cwebpack2.1.5.png" alt="通过配置文件来使用Webpack"></p>
-<h2 id="更快捷的执行打包任务-自定义指令"><a href="#更快捷的执行打包任务-自定义指令" class="headerlink" title="更快捷的执行打包任务(自定义指令)"></a>更快捷的执行打包任务(自定义指令)</h2><p>在命令行中输入命令需要代码类似于<code>node_modules/.bin/webpack</code>这样的路径其实是比较烦人的，不过值得庆幸的是npm可以引导任务执行，对npm进行配置后可以在命令行中使用简单的<code>npm start</code>自定义命令来替代上面略微繁琐的命令。在<code>package.json</code>中对scripts对象进行相关设置即可，设置方法如下。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;webpack-sample-project&quot;,</span><br><span class="line">  &quot;version&quot;: &quot;1.0.0&quot;,</span><br><span class="line">  &quot;description&quot;: &quot;Sample webpack project&quot;,</span><br><span class="line">  &quot;scripts&quot;: &#123;</span><br><span class="line">    &quot;dev&quot;: &quot;webpack --mode development&quot;,  </span><br><span class="line">    &quot;build&quot;: &quot;webpack --mode production&quot;,</span><br><span class="line">    &quot;s&quot;: &quot;webpack&quot; &#x2F;&#x2F; 修改的是这里，JSON文件不支持注释，引用时请清除</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;author&quot;: &quot;zhang&quot;,</span><br><span class="line">  &quot;license&quot;: &quot;ISC&quot;,</span><br><span class="line">  &quot;devDependencies&quot;: &#123;</span><br><span class="line">    &quot;webpack&quot;: &quot;3.10.0&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>效果⬇</strong><br><img src="/.io//%5Cimages%5Cpic%5Cwebpack7.png" alt="自定义指令使用webpack"></p>
-<p><code>注：package.json中的script会安装一定顺序寻找命令对应位置，本地的node_modules/.bin路径就在这个寻找清单中，所以无论是全局还是局部安装的Webpack，都不需要写前面那指明详细的路径。</code></p>
-<h1 id="Webpack的强大功能"><a href="#Webpack的强大功能" class="headerlink" title="Webpack的强大功能"></a>Webpack的强大功能</h1><ul>
-<li><h2 id="生成Source-Maps（使调试更容易）"><a href="#生成Source-Maps（使调试更容易）" class="headerlink" title="生成Source Maps（使调试更容易）"></a>生成Source Maps（使调试更容易）</h2></li>
-</ul>
-<p>开发总是离不开调试，方便的调试能极大的提高开发效率，不过有时候通过打包后的文件，你是不容易找到出错了的地方，对应的你写的代码的位置的，Source Maps就是来帮我们解决这个问题的。</p>
-<p>通过简单的配置，webpack就可以在打包时为我们生成的source maps，这为我们提供了一种对应编译文件和源文件的方法，使得编译后的代码可读性更高，也更容易调试。</p>
-<p>在webpack的配置文件中配置source maps，需要配置devtool，它有以下四种不同的配置选项，各具优缺点，描述如下：</p>
-<p><img src="/.io//%5Cimages%5Cpic%5Cwebpack8.png" alt="source maps"></p>
-<p>正如上表所述，上述选项由上到下打包速度越来越快，不过同时也具有越来越多的负面作用，较快的打包速度的后果就是对打包后的文件的的执行有一定影响。</p>
-<p>对小到中型的项目中，<code>eval-source-map</code>是一个很好的选项，再次强调你只应该开发阶段使用它，我们继续对上文新建的<code>webpack.config.js</code>，进行如下配置:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">  devtool: &#39;eval-source-map&#39;,</span><br><span class="line">  entry:  __dirname + &quot;&#x2F;app&#x2F;main.js&quot;,</span><br><span class="line">  output: &#123;</span><br><span class="line">    path: __dirname + &quot;&#x2F;public&quot;,</span><br><span class="line">    filename: &quot;bundle.js&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>注:</code>cheap-module-eval-source-map方法构建速度更快，但是不利于调试，推荐在大型项目考虑时间成本时使用。</p>
-<ul>
-<li><h2 id="使用webpack构建本地服务器"><a href="#使用webpack构建本地服务器" class="headerlink" title="使用webpack构建本地服务器"></a>使用webpack构建本地服务器</h2><p><code>Webpack</code>提供一个可选的本地开发服务器，这个本地服务器基于<code>node.js</code>构建，可以实现浏览器监听开发者对代码修改的功能。当然，咱们也可以使用<code>http-server</code>启动服务，想要了解的同学可以移步博主的另一篇教程<a href="http://liou.site/2018/11/05/ssh%E8%BF%9E%E6%8E%A5Linux-%E9%83%A8%E7%BD%B2http-server/#more" target="_blank" rel="noopener">ssh连接Linux,命令行部署http-server</a></p>
-<p>接着说下使用webpack构建本地服务器之前，如何单独安装它作为项目依赖</p>
-<pre>npm install --save-dev webpack-dev-server</pre>
-
-<p>devserver作为webpack配置选项中的一项，以下是它的一些配置选项：</p>
-<p><img src="/.io//%5Cimages%5Cpic%5Cwebpack9.png" alt=" devserver配置选项"></p>
-<p>把这些命令加到webpack的配置文件中，现在的配置文件<code>webpack.config.js</code>如下所示</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">  devtool: &#39;eval-source-map&#39;,</span><br><span class="line">  entry:  __dirname + &quot;&#x2F;app&#x2F;main.js&quot;,</span><br><span class="line">  output: &#123;</span><br><span class="line">    path: __dirname + &quot;&#x2F;public&quot;,</span><br><span class="line">    filename: &quot;bundle.js&quot;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  devServer: &#123;</span><br><span class="line">    contentBase: &quot;.&#x2F;public&quot;,&#x2F;&#x2F;本地服务器所加载的页面所在的目录</span><br><span class="line">    historyApiFallback: true,&#x2F;&#x2F;不跳转</span><br><span class="line">    inline: true&#x2F;&#x2F;实时刷新</span><br><span class="line">  &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在<code>package.json</code>中的scripts对象中添加如下命令，用以开启本地服务器：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;scripts&quot;:&#123;</span><br><span class="line">    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;,</span><br><span class="line">    &quot;start&quot;: &quot;webpack&quot;,</span><br><span class="line">    &quot;server&quot;: &quot;webpack-dev-server --open&quot;</span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure>
-<p>在终端中输入<code>npm run server</code>即可在本地的8080端口查看结果</p>
-<p><img src="/.io//%5Cimages%5Cpic%5Cwebpack10.png" alt="npm run server"></p>
-</li>
-<li><h2 id="使用Loaders"><a href="#使用Loaders" class="headerlink" title="使用Loaders"></a>使用Loaders</h2><p>通过使用不同的loader，webpack有能力调用外部的脚本或工具，实现对不同格式的文件的处理，比如说分析转换scss为css，或者把下一代的JS文件（ES6，ES7)转换为现代浏览器兼容的JS文件，对React的开发而言，合适的Loaders可以把React的中用到的JSX文件转换为JS文件。</p>
-<p>Loaders需要单独安装并且需要在webpack.config.js中的modules关键字下进行配置，Loaders的配置包括以下几方面：</p>
-<ul>
-<li><code>test</code>:一个用以匹配loaders所处理文件的拓展名的正则表达式（必须）</li>
-<li><code>loader</code>：loader的名称（必须）</li>
-<li><code>include/exclude</code>:手动添加必须处理的文件（文件夹）或屏蔽不需要处理的文件（文件夹）（可选）；</li>
-<li><code>query</code>：为loaders提供额外的设置选项（可选）</li>
-</ul>
-<p>不过在配置loader之前，我们把<code>Greeter.js</code>里的问候消息放在一个单独的JSON文件里,并通过合适的配置使<code>Greeter.js</code>可以读取该JSON文件的值，各文件修改后的代码如下：</p>
-<p>在app文件夹中创建带有问候信息的JSON文件(命名为<code>config.json</code>)</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line"> &quot;greetText&quot;: &quot;Hi there and greetings from JSON!&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>更新后的<code>Greeter.js</code></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var config &#x3D; require(&#39;.&#x2F;config.json&#39;);</span><br><span class="line">module.exports &#x3D; function() &#123;</span><br><span class="line">  var greet &#x3D; document.createElement(&#39;div&#39;);</span><br><span class="line">  greet.textContent &#x3D; config.greetText;</span><br><span class="line">  return greet;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h1 id="Babel"><a href="#Babel" class="headerlink" title="Babel"></a>Babel</h1><h2 id="简单理解"><a href="#简单理解" class="headerlink" title="简单理解"></a>简单理解</h2><p>Babel其实是一个编译JavaScript的平台，它可以编译代码帮你达到以下目的：</p>
-<ul>
-<li>让你能使用最新的JavaScript代码（ES6，ES7…），而不用管新标准是否被当前使用的浏览器完全支持；</li>
-<li>让你能使用基于JavaScript进行了拓展的语言，比如React的JSX；</li>
-</ul>
-<h2 id="Babel的安装与配置"><a href="#Babel的安装与配置" class="headerlink" title="Babel的安装与配置"></a>Babel的安装与配置</h2><p>Babel其实是几个模块化的包，其核心功能位于称为<code>babel-core</code>的npm包中，webpack可以把其不同的包整合在一起使用，对于每一个你需要的功能或拓展，你都需要安装单独的包（用得最多的是解析Es6的<code>babel-env-preset</code>包和解析<code>JSX</code>的<code>babel-preset-react</code>包）。</p>
-<p>上指令：</p>
-<pre>// npm一次性安装多个依赖模块，模块之间用空格隔开
- npm install --save-dev babel-core babel-loader babel-preset-env babel-preset-react</pre>
-
-
-<p> <strong>效果⬇</strong></p>
-<p> <img src="/.io//%5Cimages%5Cpic%5Cwebpack11.png" alt="npm install --save-dev babel-core babel-loader babel-preset-env babel-preset-react"></p>
-<p> 接着在webpack中配置Babel：<br> <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> module.exports &#x3D; &#123;</span><br><span class="line">    entry: __dirname + &quot;&#x2F;app&#x2F;main.js&quot;,&#x2F;&#x2F;已多次提及的唯一入口文件</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: __dirname + &quot;&#x2F;public&quot;,&#x2F;&#x2F;打包后的文件存放的地方</span><br><span class="line">        filename: &quot;bundle.js&quot;&#x2F;&#x2F;打包后输出文件的文件名</span><br><span class="line">    &#125;,</span><br><span class="line">    devtool: &#39;eval-source-map&#39;,</span><br><span class="line">    devServer: &#123;</span><br><span class="line">        contentBase: &quot;.&#x2F;public&quot;,&#x2F;&#x2F;本地服务器所加载的页面所在的目录</span><br><span class="line">        historyApiFallback: true,&#x2F;&#x2F;不跳转</span><br><span class="line">        inline: true&#x2F;&#x2F;实时刷新</span><br><span class="line">    &#125;,</span><br><span class="line">    module: &#123;</span><br><span class="line">        rules: [</span><br><span class="line">            &#123;</span><br><span class="line">                test: &#x2F;(\.jsx|\.js)$&#x2F;,</span><br><span class="line">                use: &#123;</span><br><span class="line">                    loader: &quot;babel-loader&quot;,</span><br><span class="line">                    options: &#123;</span><br><span class="line">                        presets: [</span><br><span class="line">                            &quot;env&quot;, &quot;react&quot;</span><br><span class="line">                        ]</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;,</span><br><span class="line">                exclude: &#x2F;node_modules&#x2F;</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-<p> 现在你的webpack的配置已经允许你使用ES6以及JSX的语法了。继续用上面的例子进行测试，不过这次我们会使用React，记得先安装 <code>React</code> 和 <code>React-DOM</code><br> <pre>npm install --save react react-dom</pre></p>
-<p> 接下来我们使用ES6的语法，更新Greeter.js并返回一个React组件<br> <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import React, &#123;Component&#125; from &#39;react&#39;</span><br><span class="line">import config from &#39;.&#x2F;config.json&#39;;</span><br><span class="line">class Greeter extends Component&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    return (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &#123;config.greetText&#125;</span><br><span class="line">      &lt;&#x2F;div&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">export default Greeter</span><br></pre></td></tr></table></figure></p>
-<p>修改<code>main.js</code>如下，使用ES6的模块定义和渲染Greeter模块</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; main.js</span><br><span class="line">import React from &#39;react&#39;;</span><br><span class="line">import &#123;render&#125; from &#39;react-dom&#39;;</span><br><span class="line">import Greeter from &#39;.&#x2F;Greeter&#39;;</span><br><span class="line">render(&lt;Greeter &#x2F;&gt;, document.getElementById(&#39;root&#39;));</span><br></pre></td></tr></table></figure>
-
-
-<p>重新使用<code>run npm s</code>(博主这里自定义为<code>run npm s</code>)打包，如果之前打开的本地服务器没有关闭，你应该可以在<code>localhost:8080</code>下看到与之前一样的内容，这说明react和es6被正常打包了。</p>
-<p><code>注意</code><br>如果你执行<code>run npm s</code>遇到下图错误：</p>
-<p><img src="/.io//%5Cimages%5Cpic%5Cwebpack12.png" alt="报错"></p>
-<p>请执行如下指令：<br><code>npm uninstall babel-loader<br>npm install <a href="mailto:babel-loader@7.1.4">babel-loader@7.1.4</a><br></code></p>
-<p>重新安装版本babel-loader7.1.4之后，再次执行</p>
-<p><code>run npm s</code></p>
-<p>你会发现，已经启动成功</p>
-<p><img src="/.io//%5Cimages%5Cpic%5Cwebpack13.png" alt="success"></p>
-<ul>
-<li><strong>效果⬇</strong><br><img src="/.io//%5Cimages%5Cpic%5Cwebpack14.png" alt="success"></li>
-</ul>
-]]></content>
-      <categories>
-        <category>Web Develop</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-        <tag>webpack</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>无题</title>
-    <url>/2017/09/26/essay/</url>
-    <content><![CDATA[<p>心灵鸡汤    观多无感    少之无味<br>他们说 生命是周而复始 而我的难题是在一生里如何保有一种如水又如酒的记忆</p>
-<p>生活就是这样子 总不能如诗  </p>
-<a id="more"></a>
-<p>你在《霓虹深处》里说 以为一启程 《途中》便有目的<br>你说想在暮冬时烤雪 在迟夏写长信 “早春不过一棵树”<br>《早春的树》又说 “你只是经过我” 半生的意义如此取舍《来信》烧完</p>
-<p>转眼三旬 谈笑过场</p>
-<p>阅历少的吹嘘自己 真正经历过的</p>
-<p>却说自己背后没故事 仅有一只枕头</p>
-<p>生命如常 工作如常 探亲如常 举杯困倦</p>
-<p>人惶惶 心惶惶</p>
-<p>生命 原是一次又一次的试探</p>
-<p>离合悲欢 圆缺阴晴</p>
-<p>等到花满枝丫 却又别离</p>
-<p>谁说 我们必须老去 必须分离</p>
-<p>请在我身畔 客居一段</p>
-<p>早忘却</p>
-<p>曾壮言”选择远方，吐露忠诚”</p>
-<p>但今朝更倾向活在当下</p>
-<p>一七年九月二十六 凌晨一点一刻</p>
-]]></content>
-      <categories>
-        <category>生活</category>
-      </categories>
-      <tags>
-        <tag>随笔</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>微信小程序-填坑-初级入门（不定期更新）</title>
     <url>/2018/09/16/miniProgram/</url>
     <content><![CDATA[<p>前段时间博主研究了下微信小程序，写了个demo。现在回过头来整理下笔记，记录所遇到的坑。</p>
@@ -385,7 +104,7 @@ node_modules/.bin/webpack app/main.js public/bundle.js
 <li><h1 id="页面跳转传参数据：json-字符串转对象报错"><a href="#页面跳转传参数据：json-字符串转对象报错" class="headerlink" title="页面跳转传参数据：json 字符串转对象报错"></a>页面跳转传参数据：json 字符串转对象报错</h1><p>小程序的X页面向Y页面跳转的时候，传了页面参数为args（页面参数值只能是字符串，参数值是根据用户点击的信息而不同的），所以传数组或对象需要使用<code>JSON.stringify()</code>转换，到了Y页面需要将param获取到并通过<code>JSON.parse()</code>解析，结果问题是有些传过来json正常解析，有些则报这个错(json 字符串转对象报错)</p>
 </li>
 </ul>
-<p><img src="/.io//%5Cimages%5Cpic%5Cerror.png" alt="json 字符串转对象报错截图"></p>
+<p><img src="/images/error.png" alt="json 字符串转对象报错截图"></p>
 <p><strong><code>报错原因⬇</code></strong></p>
 <ul>
 <li>微信小程序限制了页面间跳转传参的长度，导致数据缺失。</li>
@@ -401,7 +120,7 @@ node_modules/.bin/webpack app/main.js public/bundle.js
 <li><h1 id="使用wx-for出现如下warning"><a href="#使用wx-for出现如下warning" class="headerlink" title="使用wx:for出现如下warning:"></a>使用wx:for出现如下warning:</h1><pre><code>Now you can provide attr &quot;wx:key&quot; for a &quot;wx:for&quot; to improve performance.</code></pre><p>小程序的X页面向Y页面跳转的时候，传了页面参数为args（页面参数值只能是字符串，参数值是根据用户点击的信息而不同的），所以传数组或对象需要使用<code>JSON.stringify()</code>转换，到了Y页面需要将param获取到并通过<code>JSON.parse()</code>解析，结果问题是有些传过来json正常解析，有些则报这个错(json 字符串转对象报错)</p>
 </li>
 </ul>
-<p><img src="/.io//%5Cimages%5Cpic%5Cwarning.png" alt="json 字符串转对象报错截图"></p>
+<p><img src="/images/warning.png" alt="json 字符串转对象报错截图"></p>
 <p><strong><code>报错原因⬇</code></strong></p>
 <ul>
 <li><p>官方解释：<br>wx:key<br>如果列表中项目的位置会动态改变或者有新的项目添加到列表中，并且希望列表中的项目保持自己的特征和状态（如 <code>&lt;input/&gt;</code> 中的输入内容，<code>&lt;switch/&gt;</code> 的选中状态），需要使用 wx:key 来指定列表中项目的唯一的标识符。</p>
@@ -413,7 +132,7 @@ node_modules/.bin/webpack app/main.js public/bundle.js
 <ul>
 <li>推荐array 的 每一个item都添加一个唯一识别的property来管理</li>
 </ul>
-<p><strong><code>Eg⬇</code></strong><br>        <text class="new_title" wx:for-items wx:key="title"></text></p>
+<p><strong><code>Eg⬇</code></strong><br>        <text class="new_title" wx:for-items='' wx:key='title'></text></p>
 <hr>
 <p><strong><code>问题详情⬇</code></strong></p>
 <ul>
@@ -421,7 +140,7 @@ node_modules/.bin/webpack app/main.js public/bundle.js
 </ul>
 <p><strong><code>设置如下⬇</code></strong></p>
 <ul>
-<li><p>主体部分：<br><img src="/.io//%5Cimages%5Cpic%5Ceg.png" alt="json 字符串转对象报错截图"></p>
+<li><p>主体部分：<br><img src="/images/eg.png" alt="json 字符串转对象报错截图"></p>
 <pre>
 app.json -> “window”: {“navigationBarBackgroundColor”: “#EEE”}
 app.json -> “window”: {“backgroundColor”: “#33CCFF”}
@@ -438,7 +157,7 @@ app.wxss 设置全局内容样式 .content {background-color: “#CCFF00”}
 <li><p>底部菜单：<br>解决办法是在页面的.wxss里设置（注意，page前没有点）：</p>
 <pre>page { background-color: #fef2dc; }</pre></li>
 <li><p>主体部分：</p>
-<p>在app.json中设置了tarBar，就会出现底部菜单，如下图<br><img src="/.io//%5Cimages%5Cpic%5Ceg2.png" alt="json 字符串转对象报错截图"></p>
+<p>在app.json中设置了tarBar，就会出现底部菜单，如下图<br><img src="/images/eg2.png" alt="json 字符串转对象报错截图"></p>
 <p>  底部菜单的背景颜色设置在app.json中：</p>
 <pre>
 "tabBar": {"backgroundColor": "#fff9e9"}
@@ -486,6 +205,287 @@ app.wxss 设置全局内容样式 .content {background-color: “#CCFF00”}
       </tags>
   </entry>
   <entry>
+    <title>Linux下安装webpack，打包部署，端口映射，实现域名访问</title>
+    <url>/2018/11/06/Linux%E4%B8%8B%E5%AE%89%E8%A3%85webpack%EF%BC%8C%E6%89%93%E5%8C%85%E9%83%A8%E7%BD%B2%EF%BC%8C%E5%AE%9E%E7%8E%B0%E5%9F%9F%E5%90%8D%E8%AE%BF%E9%97%AE/</url>
+    <content><![CDATA[<p>晚十一点一刻，好记性不如烂笔头，接着昨晚的进程，咱们今天说说Linux下安装webpack，打包部署，端口映射，实现域名访问。</p>
+<a id="more"></a>
+
+<p>另：</p>
+<ul>
+<li><p>想了解在Linux下,命令行部署http-server的同学可以戳<a href="https://liou.site/2018/11/05/ssh%E8%BF%9E%E6%8E%A5Linux-%E9%83%A8%E7%BD%B2http-server/#more" target="_blank" rel="noopener" title="Linux下,命令行部署http-server">这里</a></p>
+</li>
+<li><p><del>之前的<code>demo</code>文件夹重命名为了<code>myWebpack</code></del></p>
+</li>
+<li><p>新建文件夹，名字自定义为<code>webpack</code>。</p>
+</li>
+</ul>
+<p>还是老规矩，先连接至远端服务器。</p>
+<h1 id="使用账户名和密码进行ssh连接"><a href="#使用账户名和密码进行ssh连接" class="headerlink" title="使用账户名和密码进行ssh连接"></a>使用账户名和密码进行ssh连接</h1><ul>
+<li><p><strong>命令⬇</strong></p>
+<pre>
+  ssh root@xx.xx.xxx.xxx
+</pre>
+
+<p><code>xx.xx.xxx.xxx ➡ ur remote server ip</code></p>
+</li>
+<li><p><strong>效果⬇</strong><br><img src="/images/server.png" alt="使用账户名和密码进行ssh连接"></p>
+</li>
+</ul>
+<h1 id="使用npm安装Webpack"><a href="#使用npm安装Webpack" class="headerlink" title="使用npm安装Webpack"></a>使用npm安装Webpack</h1><p> 在自己用户权限下，之前的myWebpack文件夹下，执行npm安装</p>
+<ul>
+<li><p><strong>命令⬇</strong></p>
+<pre>//全局安装
+npm install -g webpack
+//安装到你的项目目录
+npm install --save-dev webpack
+</pre>
+
+<p>博主选择的是全局安装，此时会生成<code>package.json</code>文件，如果没有，可以用指令<code>touch package.json</code>创建,或者用<code>npm init</code>或者<code>npm init –y</code>自动生成</p>
+<p>如果输入<code>npm init</code>后，终端会问你一系列诸如项目名称，项目描述，作者等信息，不过不用担心，如果你不准备在npm中发布你的模块，这些问题的答案都不重要，回车默认即可</p>
+</li>
+<li><p><strong>效果⬇</strong><br><img src="/images/webpack6.png" alt="效果"></p>
+<p><code>但是</code>如果你遇到如下报错： </p>
+<pre>
+npm ERR! code ENOSELF
+npm ERR! Refusing to install package with name "express" under a package
+npm ERR! also called "express". Did you name your project the same
+npm ERR! as the dependency you're installing?
+npm ERR!
+npm ERR! For more information, see:
+npm ERR!
+</pre>
+
+<p>请采取修改<code>package.json</code>的<code>name</code>字段（我这里修改成<code>webpack-test</code>）,这样就安装成功，项目根目录下生成了<code>node_modules</code>等文件夹</p>
+<ul>
+<li><strong>效果⬇</strong></li>
+</ul>
+</li>
+</ul>
+<p><img src="/images/webpack1-done.png" alt="效果"></p>
+<h1 id="正式使用Webpack前的准备"><a href="#正式使用Webpack前的准备" class="headerlink" title="正式使用Webpack前的准备"></a>正式使用Webpack前的准备</h1><h2 id="安装Webpack"><a href="#安装Webpack" class="headerlink" title="安装Webpack"></a>安装Webpack</h2><p>package.json文件已就绪，在本项目中安装Webpack作为依赖包</p>
+<ul>
+<li><p><strong>命令⬇</strong></p>
+<pre>
+// 安装Webpack
+npm install --save-dev webpack
+</pre>
+</li>
+<li><p><strong>详情⬇</strong></p>
+<ul>
+<li><p>回到项目根文件夹，并在里面创建两个文件夹,app文件夹和public文件夹。</p>
+</li>
+<li><p>app文件夹用来存放原始数据和我们将写的JavaScript模块，public文件夹用来存放之后供浏览器读取的文件（包括使用webpack打包生成的js文件以及一个index.html文件）。</p>
+</li>
+<li><p>接下来我们再创建三个文件:</p>
+<ul>
+<li><code>index.html</code> –放在public文件夹中;</li>
+<li><code>Greeter.js</code>– 放在app文件夹中;</li>
+<li><code>main.js</code>– 放在app文件夹中;</li>
+</ul>
+</li>
+<li><p><strong>项目目录结构⬇</strong><br><img src="/images/webpack.png" alt="项目目录结构"></p>
+</li>
+<li><p><strong>为各个文件添加内容⬇</strong></p>
+</li>
+<li><p>编辑index.html⬇</p>
+<p>  我们在index.html文件中写入最基础的html代码，它在这里目的在于引入打包后的js文件（这里先把之后打包后的js文件命名为bundle.js，之后还会详细讲述）</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;!-- index.html --&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;&lt;html lang&#x3D;&quot;en&quot;&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;meta charset&#x3D;&quot;utf-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Webpack Sample Project&lt;&#x2F;title&gt;</span><br><span class="line">  &lt;&#x2F;head&gt;</span><br><span class="line">  &lt;body&gt;</span><br><span class="line">    &lt;div id&#x3D;&#39;root&#39;&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">    &lt;script src&#x3D;&quot;bundle.js&quot;&gt;&lt;&#x2F;script&gt;</span><br><span class="line">  &lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编辑Greeter.js⬇</p>
+<p>  在Greeter.js中定义一个返回包含问候信息的html元素的函数,并依据CommonJS规范导出这个函数为一个模块：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; Greeter.js</span><br><span class="line">module.exports &#x3D; function() &#123;</span><br><span class="line">  var greet &#x3D; document.createElement(&#39;div&#39;);</span><br><span class="line">  greet.textContent &#x3D; &quot;Hi there and greetings!&quot;;</span><br><span class="line">  return greet;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编辑main.js⬇</p>
+<p>  main.js文件中写入下述代码，用以把Greeter模块返回的节点插入页面</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;main.js </span><br><span class="line">const greeter &#x3D; require(&#39;.&#x2F;Greeter.js&#39;);</span><br><span class="line">document.querySelector(&quot;#root&quot;).appendChild(greeter());</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="安装webpack-cli"><a href="#安装webpack-cli" class="headerlink" title="安装webpack-cli"></a>安装webpack-cli</h2><p><code>在webpack4的版本里，CLI被单独分离出来了所以要我们单独安装  执行全局命令 npm i -g webpack-cli 安装完脚手架</code></p>
+<p>博主这里选择全局安装</p>
+<ul>
+<li><pre>npm install --save-dev webpack-cli -g</pre>
+
+
+</li>
+</ul>
+<p>webpack4.x中打包默认找src/index.js作为默认入口，可以直接在终端中输入命令<code>webpack</code> 将当前的内容进行一个简单的打包</p>
+<p><strong>效果⬇</strong><br><img src="/images/webpack2.1.4.png" alt="webpack"></p>
+<p>我们可以看到打包的时候终端中会出现黄色的<code>警告提示</code>，这是因为：mode是webpack中独有的，有两种打包环境，一个是开发环境：development；另外一个是生产环境：production</p>
+<p>我们可以采用两种方式：</p>
+<p>第一种：打包时候输入<code>webpack --mode=development</code>或者<code>webpack --mode=production</code><br>第二种：<code>package.json</code>文件中添加配置项</p>
+<p>下面贴出第二种（<code>package.json</code>文件中添加配置项）详细步骤</p>
+<ul>
+<li>在<code>package.json</code>文件中添加配置项<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;scripts&quot;: &#123;  </span><br><span class="line">  &quot;dev&quot;: &quot;webpack --mode development&quot;,  </span><br><span class="line">  &quot;build&quot;: &quot;webpack --mode production&quot;  </span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure></li>
+<li><code>package.json</code>文件内容为：</li>
+</ul>
+<p><img src="/images/webpack2.1.3.png" alt="package.json"></p>
+<h2 id="创建webpack-config-js并编辑"><a href="#创建webpack-config-js并编辑" class="headerlink" title="创建webpack.config.js并编辑"></a>创建<code>webpack.config.js</code>并编辑</h2><ul>
+<li><pre>touch webpack.config.js</pre>
+</li>
+<li><pre>vi webpack.config.js</pre>
+
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;webpack.config.js</span><br><span class="line">module.exports &#x3D; &#123;</span><br><span class="line">  mode: &quot;development&quot;,</span><br><span class="line">  entry:  __dirname + &quot;&#x2F;app&#x2F;main.js&quot;,&#x2F;&#x2F;已多次提及的唯一入口文件</span><br><span class="line">  output: &#123;</span><br><span class="line">    path: __dirname + &quot;&#x2F;public&quot;,&#x2F;&#x2F;打包后的文件存放的地方</span><br><span class="line">    filename: &quot;bundle.js&quot;&#x2F;&#x2F;打包后输出文件的文件名</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+<br/>
+
+<h1 id="正式使用Webpack"><a href="#正式使用Webpack" class="headerlink" title="正式使用Webpack"></a>正式使用Webpack</h1><h2 id="在终端中使用Webpack"><a href="#在终端中使用Webpack" class="headerlink" title="在终端中使用Webpack"></a>在终端中使用Webpack</h2><p>基本的使用方法如下：</p>
+<pre>
+# {extry file}出填写入口文件的路径，本文中就是上述main.js的路径，
+# {destination for bundled file}处填写打包文件的存放路径
+# 填写路径的时候不用添加{}
+webpack {entry file} {destination for bundled file}
+</pre>
+
+<p>拿博主写的为例：（在项目根目录下执行）</p>
+<pre>webpack app/main.js</pre>
+
+<p><strong>效果⬇</strong><br><img src="/images/webpack2.1.png" alt="在终端中使用webpack"></p>
+<p>指定入口文件后，webpack将自动识别项目所依赖的其它文件，不过需要注意的是如果你的webpack不是全局安装的，那么当你在终端中使用此命令时，需要额外指定其在node_modules中的地址，继续上面的例子，在终端中输入如下命令</p>
+<pre>
+# webpack非全局安装的情况
+node_modules/.bin/webpack app/main.js public/bundle.js
+</pre>
+
+<p><strong>效果⬇</strong></p>
+<p><img src="/images/webpack2.png" alt="在终端中使用webpack"></p>
+<p>可以看出webpack同时编译了main.js 和Greeter,js,现在浏览器打开index.html</p>
+<h2 id="通过配置文件来使用Webpack"><a href="#通过配置文件来使用Webpack" class="headerlink" title="通过配置文件来使用Webpack"></a>通过配置文件来使用Webpack</h2><p>Webpack拥有很多其它的比较高级的功能（比如说本文后面会介绍的loaders和plugins），这些功能其实都可以通过命令行模式实现，但是正如前面提到的，这样不太方便且容易出错的，更好的办法是定义一个配置文件，这个配置文件其实也是一个简单的JavaScript模块，我们可以把所有的与打包相关的信息放在里面。</p>
+<p>继续上面的例子来说明如何写这个配置文件，在当前练习文件夹的根目录下新建一个名为<code>webpack.config.js</code>的文件，我们在其中写入如下所示的简单配置代码，目前的配置主要涉及到的内容是入口文件路径和打包后文件的存放路径。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module.exports &#x3D; &#123;</span><br><span class="line">  mode: &quot;development&quot;,</span><br><span class="line">  entry:  __dirname + &quot;&#x2F;app&#x2F;main.js&quot;,&#x2F;&#x2F;已多次提及的唯一入口文件</span><br><span class="line">  output: &#123;</span><br><span class="line">    path: __dirname + &quot;&#x2F;public&quot;,&#x2F;&#x2F;打包后的文件存放的地方</span><br><span class="line">    filename: &quot;bundle.js&quot;&#x2F;&#x2F;打包后输出文件的文件名</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>注：“__dirname”是node.js中的一个全局变量，它指向当前执行脚本所在的目录。</code></p>
+<p>有了这个配置之后，再打包文件，只需在终端里运行webpack(非全局安装需使用node_modules/.bin/webpack)命令就可以了，这条命令会自动引用webpack.config.js文件中的配置选项，示例如下：</p>
+<p><img src="/images/webpack2.1.5.png" alt="通过配置文件来使用Webpack"></p>
+<h2 id="更快捷的执行打包任务-自定义指令"><a href="#更快捷的执行打包任务-自定义指令" class="headerlink" title="更快捷的执行打包任务(自定义指令)"></a>更快捷的执行打包任务(自定义指令)</h2><p>在命令行中输入命令需要代码类似于<code>node_modules/.bin/webpack</code>这样的路径其实是比较烦人的，不过值得庆幸的是npm可以引导任务执行，对npm进行配置后可以在命令行中使用简单的<code>npm start</code>自定义命令来替代上面略微繁琐的命令。在<code>package.json</code>中对scripts对象进行相关设置即可，设置方法如下。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;webpack-sample-project&quot;,</span><br><span class="line">  &quot;version&quot;: &quot;1.0.0&quot;,</span><br><span class="line">  &quot;description&quot;: &quot;Sample webpack project&quot;,</span><br><span class="line">  &quot;scripts&quot;: &#123;</span><br><span class="line">    &quot;dev&quot;: &quot;webpack --mode development&quot;,  </span><br><span class="line">    &quot;build&quot;: &quot;webpack --mode production&quot;,</span><br><span class="line">    &quot;s&quot;: &quot;webpack&quot; &#x2F;&#x2F; 修改的是这里，JSON文件不支持注释，引用时请清除</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;author&quot;: &quot;zhang&quot;,</span><br><span class="line">  &quot;license&quot;: &quot;ISC&quot;,</span><br><span class="line">  &quot;devDependencies&quot;: &#123;</span><br><span class="line">    &quot;webpack&quot;: &quot;3.10.0&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>效果⬇</strong><br><img src="/images/webpack7.png" alt="自定义指令使用webpack"></p>
+<p><code>注：package.json中的script会安装一定顺序寻找命令对应位置，本地的node_modules/.bin路径就在这个寻找清单中，所以无论是全局还是局部安装的Webpack，都不需要写前面那指明详细的路径。</code></p>
+<h1 id="Webpack的强大功能"><a href="#Webpack的强大功能" class="headerlink" title="Webpack的强大功能"></a>Webpack的强大功能</h1><ul>
+<li><h2 id="生成Source-Maps（使调试更容易）"><a href="#生成Source-Maps（使调试更容易）" class="headerlink" title="生成Source Maps（使调试更容易）"></a>生成Source Maps（使调试更容易）</h2></li>
+</ul>
+<p>开发总是离不开调试，方便的调试能极大的提高开发效率，不过有时候通过打包后的文件，你是不容易找到出错了的地方，对应的你写的代码的位置的，Source Maps就是来帮我们解决这个问题的。</p>
+<p>通过简单的配置，webpack就可以在打包时为我们生成的source maps，这为我们提供了一种对应编译文件和源文件的方法，使得编译后的代码可读性更高，也更容易调试。</p>
+<p>在webpack的配置文件中配置source maps，需要配置devtool，它有以下四种不同的配置选项，各具优缺点，描述如下：</p>
+<p><img src="/images/webpack8.png" alt="source maps"></p>
+<p>正如上表所述，上述选项由上到下打包速度越来越快，不过同时也具有越来越多的负面作用，较快的打包速度的后果就是对打包后的文件的的执行有一定影响。</p>
+<p>对小到中型的项目中，<code>eval-source-map</code>是一个很好的选项，再次强调你只应该开发阶段使用它，我们继续对上文新建的<code>webpack.config.js</code>，进行如下配置:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">  devtool: &#39;eval-source-map&#39;,</span><br><span class="line">  entry:  __dirname + &quot;&#x2F;app&#x2F;main.js&quot;,</span><br><span class="line">  output: &#123;</span><br><span class="line">    path: __dirname + &quot;&#x2F;public&quot;,</span><br><span class="line">    filename: &quot;bundle.js&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>注:</code>cheap-module-eval-source-map方法构建速度更快，但是不利于调试，推荐在大型项目考虑时间成本时使用。</p>
+<ul>
+<li><h2 id="使用webpack构建本地服务器"><a href="#使用webpack构建本地服务器" class="headerlink" title="使用webpack构建本地服务器"></a>使用webpack构建本地服务器</h2><p><code>Webpack</code>提供一个可选的本地开发服务器，这个本地服务器基于<code>node.js</code>构建，可以实现浏览器监听开发者对代码修改的功能。当然，咱们也可以使用<code>http-server</code>启动服务，想要了解的同学可以移步博主的另一篇教程<a href="http://liou.site/2018/11/05/ssh%E8%BF%9E%E6%8E%A5Linux-%E9%83%A8%E7%BD%B2http-server/#more" target="_blank" rel="noopener">ssh连接Linux,命令行部署http-server</a></p>
+<p>接着说下使用webpack构建本地服务器之前，如何单独安装它作为项目依赖</p>
+<pre>npm install --save-dev webpack-dev-server</pre>
+
+<p>devserver作为webpack配置选项中的一项，以下是它的一些配置选项：</p>
+<p><img src="/images/webpack9.png" alt=" devserver配置选项"></p>
+<p>把这些命令加到webpack的配置文件中，现在的配置文件<code>webpack.config.js</code>如下所示</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">  devtool: &#39;eval-source-map&#39;,</span><br><span class="line">  entry:  __dirname + &quot;&#x2F;app&#x2F;main.js&quot;,</span><br><span class="line">  output: &#123;</span><br><span class="line">    path: __dirname + &quot;&#x2F;public&quot;,</span><br><span class="line">    filename: &quot;bundle.js&quot;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  devServer: &#123;</span><br><span class="line">    contentBase: &quot;.&#x2F;public&quot;,&#x2F;&#x2F;本地服务器所加载的页面所在的目录</span><br><span class="line">    historyApiFallback: true,&#x2F;&#x2F;不跳转</span><br><span class="line">    inline: true&#x2F;&#x2F;实时刷新</span><br><span class="line">  &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在<code>package.json</code>中的scripts对象中添加如下命令，用以开启本地服务器：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;scripts&quot;:&#123;</span><br><span class="line">    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;,</span><br><span class="line">    &quot;start&quot;: &quot;webpack&quot;,</span><br><span class="line">    &quot;server&quot;: &quot;webpack-dev-server --open&quot;</span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure>
+<p>在终端中输入<code>npm run server</code>即可在本地的8080端口查看结果</p>
+<p><img src="/images/webpack10.png" alt="npm run server"></p>
+</li>
+<li><h2 id="使用Loaders"><a href="#使用Loaders" class="headerlink" title="使用Loaders"></a>使用Loaders</h2><p>通过使用不同的loader，webpack有能力调用外部的脚本或工具，实现对不同格式的文件的处理，比如说分析转换scss为css，或者把下一代的JS文件（ES6，ES7)转换为现代浏览器兼容的JS文件，对React的开发而言，合适的Loaders可以把React的中用到的JSX文件转换为JS文件。</p>
+<p>Loaders需要单独安装并且需要在webpack.config.js中的modules关键字下进行配置，Loaders的配置包括以下几方面：</p>
+<ul>
+<li><code>test</code>:一个用以匹配loaders所处理文件的拓展名的正则表达式（必须）</li>
+<li><code>loader</code>：loader的名称（必须）</li>
+<li><code>include/exclude</code>:手动添加必须处理的文件（文件夹）或屏蔽不需要处理的文件（文件夹）（可选）；</li>
+<li><code>query</code>：为loaders提供额外的设置选项（可选）</li>
+</ul>
+<p>不过在配置loader之前，我们把<code>Greeter.js</code>里的问候消息放在一个单独的JSON文件里,并通过合适的配置使<code>Greeter.js</code>可以读取该JSON文件的值，各文件修改后的代码如下：</p>
+<p>在app文件夹中创建带有问候信息的JSON文件(命名为<code>config.json</code>)</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line"> &quot;greetText&quot;: &quot;Hi there and greetings from JSON!&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>更新后的<code>Greeter.js</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var config &#x3D; require(&#39;.&#x2F;config.json&#39;);</span><br><span class="line">module.exports &#x3D; function() &#123;</span><br><span class="line">  var greet &#x3D; document.createElement(&#39;div&#39;);</span><br><span class="line">  greet.textContent &#x3D; config.greetText;</span><br><span class="line">  return greet;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="Babel"><a href="#Babel" class="headerlink" title="Babel"></a>Babel</h1><h2 id="简单理解"><a href="#简单理解" class="headerlink" title="简单理解"></a>简单理解</h2><p>Babel其实是一个编译JavaScript的平台，它可以编译代码帮你达到以下目的：</p>
+<ul>
+<li>让你能使用最新的JavaScript代码（ES6，ES7…），而不用管新标准是否被当前使用的浏览器完全支持；</li>
+<li>让你能使用基于JavaScript进行了拓展的语言，比如React的JSX；</li>
+</ul>
+<h2 id="Babel的安装与配置"><a href="#Babel的安装与配置" class="headerlink" title="Babel的安装与配置"></a>Babel的安装与配置</h2><p>Babel其实是几个模块化的包，其核心功能位于称为<code>babel-core</code>的npm包中，webpack可以把其不同的包整合在一起使用，对于每一个你需要的功能或拓展，你都需要安装单独的包（用得最多的是解析Es6的<code>babel-env-preset</code>包和解析<code>JSX</code>的<code>babel-preset-react</code>包）。</p>
+<p>上指令：</p>
+<pre>// npm一次性安装多个依赖模块，模块之间用空格隔开
+ npm install --save-dev babel-core babel-loader babel-preset-env babel-preset-react</pre>
+
+
+<p> <strong>效果⬇</strong></p>
+<p> <img src="/images/webpack11.png" alt="npm install --save-dev babel-core babel-loader babel-preset-env babel-preset-react"></p>
+<p> 接着在webpack中配置Babel：<br> <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> module.exports &#x3D; &#123;</span><br><span class="line">    entry: __dirname + &quot;&#x2F;app&#x2F;main.js&quot;,&#x2F;&#x2F;已多次提及的唯一入口文件</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: __dirname + &quot;&#x2F;public&quot;,&#x2F;&#x2F;打包后的文件存放的地方</span><br><span class="line">        filename: &quot;bundle.js&quot;&#x2F;&#x2F;打包后输出文件的文件名</span><br><span class="line">    &#125;,</span><br><span class="line">    devtool: &#39;eval-source-map&#39;,</span><br><span class="line">    devServer: &#123;</span><br><span class="line">        contentBase: &quot;.&#x2F;public&quot;,&#x2F;&#x2F;本地服务器所加载的页面所在的目录</span><br><span class="line">        historyApiFallback: true,&#x2F;&#x2F;不跳转</span><br><span class="line">        inline: true&#x2F;&#x2F;实时刷新</span><br><span class="line">    &#125;,</span><br><span class="line">    module: &#123;</span><br><span class="line">        rules: [</span><br><span class="line">            &#123;</span><br><span class="line">                test: &#x2F;(\.jsx|\.js)$&#x2F;,</span><br><span class="line">                use: &#123;</span><br><span class="line">                    loader: &quot;babel-loader&quot;,</span><br><span class="line">                    options: &#123;</span><br><span class="line">                        presets: [</span><br><span class="line">                            &quot;env&quot;, &quot;react&quot;</span><br><span class="line">                        ]</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;,</span><br><span class="line">                exclude: &#x2F;node_modules&#x2F;</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p> 现在你的webpack的配置已经允许你使用ES6以及JSX的语法了。继续用上面的例子进行测试，不过这次我们会使用React，记得先安装 <code>React</code> 和 <code>React-DOM</code><br> <pre>npm install --save react react-dom</pre></p>
+<p> 接下来我们使用ES6的语法，更新Greeter.js并返回一个React组件<br> <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import React, &#123;Component&#125; from &#39;react&#39;</span><br><span class="line">import config from &#39;.&#x2F;config.json&#39;;</span><br><span class="line">class Greeter extends Component&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    return (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &#123;config.greetText&#125;</span><br><span class="line">      &lt;&#x2F;div&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">export default Greeter</span><br></pre></td></tr></table></figure></p>
+<p>修改<code>main.js</code>如下，使用ES6的模块定义和渲染Greeter模块</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; main.js</span><br><span class="line">import React from &#39;react&#39;;</span><br><span class="line">import &#123;render&#125; from &#39;react-dom&#39;;</span><br><span class="line">import Greeter from &#39;.&#x2F;Greeter&#39;;</span><br><span class="line">render(&lt;Greeter &#x2F;&gt;, document.getElementById(&#39;root&#39;));</span><br></pre></td></tr></table></figure>
+
+
+<p>重新使用<code>run npm s</code>(博主这里自定义为<code>run npm s</code>)打包，如果之前打开的本地服务器没有关闭，你应该可以在<code>localhost:8080</code>下看到与之前一样的内容，这说明react和es6被正常打包了。</p>
+<p><code>注意</code><br>如果你执行<code>run npm s</code>遇到下图错误：</p>
+<p><img src="/images/webpack12.png" alt="报错"></p>
+<p>请执行如下指令：<br><code>npm uninstall babel-loader<br>npm install <a href="mailto:babel-loader@7.1.4">babel-loader@7.1.4</a><br></code></p>
+<p>重新安装版本babel-loader7.1.4之后，再次执行</p>
+<p><code>run npm s</code></p>
+<p>你会发现，已经启动成功</p>
+<p><img src="/images/webpack13.png" alt="success"></p>
+<ul>
+<li><strong>效果⬇</strong><br><img src="/images/webpack14.png" alt="success"></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Web Develop</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>webpack</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>无题</title>
+    <url>/2017/09/26/essay/</url>
+    <content><![CDATA[<p>心灵鸡汤    观多无感    少之无味<br>他们说 生命是周而复始 而我的难题是在一生里如何保有一种如水又如酒的记忆</p>
+<p>生活就是这样子 总不能如诗  </p>
+<a id="more"></a>
+<p>你在《霓虹深处》里说 以为一启程 《途中》便有目的<br>你说想在暮冬时烤雪 在迟夏写长信 “早春不过一棵树”<br>《早春的树》又说 “你只是经过我” 半生的意义如此取舍《来信》烧完</p>
+<p>转眼三旬 谈笑过场</p>
+<p>阅历少的吹嘘自己 真正经历过的</p>
+<p>却说自己背后没故事 仅有一只枕头</p>
+<p>生命如常 工作如常 探亲如常 举杯困倦</p>
+<p>人惶惶 心惶惶</p>
+<p>生命 原是一次又一次的试探</p>
+<p>离合悲欢 圆缺阴晴</p>
+<p>等到花满枝丫 却又别离</p>
+<p>谁说 我们必须老去 必须分离</p>
+<p>请在我身畔 客居一段</p>
+<p>早忘却</p>
+<p>曾壮言”选择远方，吐露忠诚”</p>
+<p>但今朝更倾向活在当下</p>
+<p>一七年九月二十六 凌晨一点一刻</p>
+]]></content>
+      <categories>
+        <category>生活</category>
+      </categories>
+      <tags>
+        <tag>随笔</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>ssh连接Linux,命令行部署http-server</title>
     <url>/2018/11/05/ssh%E8%BF%9E%E6%8E%A5Linux-%E9%83%A8%E7%BD%B2http-server/</url>
     <content><![CDATA[<p>今晚实践了在ssh连接Linux之后,部署http-server，下面贴出启动步骤：</p>
@@ -494,13 +494,13 @@ app.wxss 设置全局内容样式 .content {background-color: “#CCFF00”}
 <li><strong>命令⬇</strong><pre>
   ssh root@xx.xx.xxx.xxx
 </pre></li>
-<li><strong>效果⬇</strong><br><img src="/.io//%5Cimages%5Cpic%5Cserver.png" alt="使用账户名和密码进行ssh连接"></li>
+<li><strong>效果⬇</strong><br><img src="/images/server.png" alt="使用账户名和密码进行ssh连接"></li>
 </ul>
 <h1 id="安装http-server"><a href="#安装http-server" class="headerlink" title="安装http-server"></a>安装http-server</h1><p> 在自己用户权限下，新建一个空文件夹（这里是demo）执行局部安装命令</p>
 <ul>
 <li><strong>命令⬇</strong><pre>npm install http-server</pre>
 此时会生成<code>package.json</code>文件，如果没有，可以用指令<code>npm init –y</code>生成</li>
-<li><strong>效果⬇</strong><br><img src="/.io//%5Cimages%5Cpic%5Cserver2.png" alt="安装http-server"></li>
+<li><strong>效果⬇</strong><br><img src="/images/server2.png" alt="安装http-server"></li>
 </ul>
 <h1 id="编辑package-json-方便使用npm-stat启动服务"><a href="#编辑package-json-方便使用npm-stat启动服务" class="headerlink" title="编辑package.json(方便使用npm stat启动服务)"></a>编辑package.json(方便使用<code>npm stat</code>启动服务)</h1><p> 在自己用户权限下，新建一个空文件夹（这里是demo）执行局部安装命令</p>
 <ul>
@@ -524,14 +524,14 @@ app.wxss 设置全局内容样式 .content {background-color: “#CCFF00”}
     "license": "ISC"
   }
 </pre></li>
-<li><strong>效果⬇</strong><br><img src="/.io//%5Cimages%5Cpic%5Cserver3.png" alt="编辑package.json(方便使用`npm stat`启动服务)"></li>
+<li><strong>效果⬇</strong><br><img src="/images/server3.png" alt="编辑package.json(方便使用`npm stat`启动服务)"></li>
 </ul>
 <h1 id="使用命令启动服务"><a href="#使用命令启动服务" class="headerlink" title="使用命令启动服务"></a>使用命令启动服务</h1><ul>
 <li><strong>命令⬇</strong><pre>npm start</pre></li>
-<li><strong>效果⬇</strong><br><img src="/.io//%5Cimages%5Cpic%5Cserver4.png" alt="使用命令启动服务"></li>
+<li><strong>效果⬇</strong><br><img src="/images/server4.png" alt="使用命令启动服务"></li>
 </ul>
 <h1 id="打开浏览器，访问域名"><a href="#打开浏览器，访问域名" class="headerlink" title="打开浏览器，访问域名"></a>打开浏览器，访问域名</h1><ul>
-<li><strong>效果⬇</strong><br><img src="/.io//%5Cimages%5Cpic%5Cserver5.png" alt="打开浏览器，访问域名"></li>
+<li><strong>效果⬇</strong><br><img src="/images/server5.png" alt="打开浏览器，访问域名"></li>
 </ul>
 <h1 id="开启后台不断开"><a href="#开启后台不断开" class="headerlink" title="开启后台不断开"></a>开启后台不断开</h1><p>开启成功后，关闭CMD亦能访问服务。</p>
 <ul>
@@ -545,7 +545,7 @@ app.wxss 设置全局内容样式 .content {background-color: “#CCFF00”}
 <li>更多指令请移步Google</li>
 </ul>
 </li>
-<li><p><strong>效果⬇</strong><br><img src="/.io//%5Cimages%5Cpic%5Cserver6.png" alt="使用命令启动服务"></p>
+<li><p><strong>效果⬇</strong><br><img src="/images/server6.png" alt="使用命令启动服务"></p>
 </li>
 </ul>
 ]]></content>

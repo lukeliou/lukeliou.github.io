@@ -94,19 +94,19 @@
 <meta property="og:url" content="http://lukeliou.github.io/2018/12/18/2018%E5%B9%B412%E6%9C%8817%E6%97%A5/index.html">
 <meta property="og:site_name" content="Luke&#39;s Blog">
 <meta property="og:description" content="好久不更新，今天咱们说说移动端下FCP优化以及Vue页面骨架屏注入实践。">
-<meta property="og:image" content="http://lukeliou.github.io/.io//%5Cimages%5Clogo.png">
-<meta property="og:image" content="http://lukeliou.github.io/.io//%5Cimages%5Cpic%5Cskeleton2.gif">
-<meta property="og:image" content="http://lukeliou.github.io/.io//%5Cimages%5Cpic%5Cskeleton.gif">
-<meta property="og:image" content="http://lukeliou.github.io/.io//%5Cimages%5Cpic%5Clist.png">
-<meta property="og:image" content="http://lukeliou.github.io/.io//%5Cimages%5Cpic%5Ceg.gif">
+<meta property="og:image" content="http://lukeliou.github.io/images/logo.jpg">
+<meta property="og:image" content="http://lukeliou.github.io/images/skeleton2.gif">
+<meta property="og:image" content="http://lukeliou.github.io/images/skeleton.gif">
+<meta property="og:image" content="http://lukeliou.github.io/2018/12/18/2018%E5%B9%B412%E6%9C%8817%E6%97%A5/%5Cimages%5Cpic%5Clist.png">
+<meta property="og:image" content="http://lukeliou.github.io/images/eg.gif">
 <meta property="article:published_time" content="2018-12-18T06:32:00.000Z">
-<meta property="article:modified_time" content="2021-03-28T03:08:23.217Z">
+<meta property="article:modified_time" content="2021-03-28T10:56:19.577Z">
 <meta property="article:author" content="Luke">
 <meta property="article:tag" content="vue">
 <meta property="article:tag" content="移动端">
 <meta property="article:tag" content="骨架屏">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://lukeliou.github.io/.io//%5Cimages%5Clogo.png">
+<meta name="twitter:image" content="http://lukeliou.github.io/images/logo.jpg">
 
 
 
@@ -454,7 +454,7 @@
 <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>&emsp;&emsp;随着时间推移，前后端开发渐趋分离，这种开发方式大大提高了前后端项目的可维护性与开发效率，这也使得前后端开发者更关注自己的开发工作。</p>
 <p>&emsp;&emsp;但由于在各个不同场景以及公司、客户日益增长的需求，程序猿们也在开发过程中，遇到些问题：比如首屏渲染时间(<code>FCP</code>)因为首屏需要请求更多内容，比原来多了更多HTTP的往返时间(RTT)，这造成了白屏，如果白屏时间过长，<code>用户体验</code>会大打折扣，如果用户网速差，则FCP会更长。</p>
 <p>&emsp;&emsp;由此引申出一系列的优化方法，<code>骨架屏</code>也因此被提出。</p>
-<p><img src="/.io//%5Cimages%5Clogo.png" alt="效果"></p>
+<p><img src="/images/logo.jpg" alt="效果"></p>
 <p>&emsp;&emsp;为了优化首屏渲染时间这个指标，减少白屏时间，前端的程序猿们想了很多办法</p>
 <ul>
 <li>加速或减少HTTP请求损耗：使用CDN加载公用库，使用强缓存和协商缓存，使用域名收敛，小图片使用Base64代替，使用Get请求代替Post请求，</li>
@@ -464,10 +464,10 @@
 <li>优化用户等待体验：白屏使用加载进度条、菊花图、骨架屏代替等；</li>
 </ul>
 <p><code>注</code>：我们可以简单将骨架屏是传统加载进度条和菊花图的升级版。</p>
-<p><img src="/.io//%5Cimages%5Cpic%5Cskeleton2.gif" alt="我们可以简单将骨架屏是传统加载进度条和菊花图的升级版"></p>
+<p><img src="/images/skeleton2.gif" alt="我们可以简单将骨架屏是传统加载进度条和菊花图的升级版"></p>
 <h1 id="举个栗子"><a href="#举个栗子" class="headerlink" title="举个栗子"></a>举个栗子</h1><p> &emsp;&emsp;脸书的骨架屏，在页面完全渲染完成之前，用户会看到一个样式简单，描绘了当前页面的大致框架的骨架屏页面，然后骨架屏中各个占位部分被实际资源完全替换，这个过程中用户会觉得内容正在逐渐加载即将呈现，降低了用户的焦躁情绪，使得加载过程主观上变得流畅。</p>
 <ul>
-<li><strong>效果⬇</strong><br><img src="/.io//%5Cimages%5Cpic%5Cskeleton.gif" alt="效果"></li>
+<li><strong>效果⬇</strong><br><img src="/images/skeleton.gif" alt="效果"></li>
 </ul>
 <h1 id="划重点：生成骨架屏的方法"><a href="#划重点：生成骨架屏的方法" class="headerlink" title="划重点：生成骨架屏的方法"></a>划重点：生成骨架屏的方法</h1><ul>
 <li><h2 id="手写HTML、CSS的方式为目标页定制骨架屏"><a href="#手写HTML、CSS的方式为目标页定制骨架屏" class="headerlink" title="手写HTML、CSS的方式为目标页定制骨架屏"></a>手写HTML、CSS的方式为目标页定制骨架屏</h2><p>&emsp;&emsp;主要思路就是使用 vue-server-renderer 这个本来用于服务端渲染的插件，用来把我们写的.vue文件处理为HTML，插入到页面模板的挂载点中，完成骨架屏的注入。这种方式不甚文明，如果页面样式改变了，还得改一遍骨架屏，增加了维护成本</p>
@@ -498,7 +498,7 @@
 </li>
 <li><p>build目录下，修改<code>webpack.prod.conf.js</code>,<code>webpack.dev.conf.js</code></p>
 </li>
-<li><p><strong>项目目录结构⬇</strong><br><img src="/.io//%5Cimages%5Cpic%5Clist.png" alt="项目目录结构"></p>
+<li><p><strong>项目目录结构⬇</strong><br><img src="%5Cimages%5Cpic%5Clist.png" alt="项目目录结构"></p>
 </li>
 <li><p><strong>为对应文件编写内容⬇</strong></p>
 <ul>
@@ -521,12 +521,12 @@
 <p>  完整文件：<br>  <code>webpack.prod.conf.js</code>⬇</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br></pre></td><td class="code"><pre><span class="line">&#39;use strict&#39;</span><br><span class="line">const path &#x3D; require(&#39;path&#39;)</span><br><span class="line">const utils &#x3D; require(&#39;.&#x2F;utils&#39;)</span><br><span class="line">const webpack &#x3D; require(&#39;webpack&#39;)</span><br><span class="line">const config &#x3D; require(&#39;..&#x2F;config&#39;)</span><br><span class="line">const merge &#x3D; require(&#39;webpack-merge&#39;)</span><br><span class="line">const baseWebpackConfig &#x3D; require(&#39;.&#x2F;webpack.base.conf&#39;)</span><br><span class="line">const CopyWebpackPlugin &#x3D; require(&#39;copy-webpack-plugin&#39;)</span><br><span class="line">const HtmlWebpackPlugin &#x3D; require(&#39;html-webpack-plugin&#39;)</span><br><span class="line">const ExtractTextPlugin &#x3D; require(&#39;extract-text-webpack-plugin&#39;)</span><br><span class="line">const OptimizeCSSPlugin &#x3D; require(&#39;optimize-css-assets-webpack-plugin&#39;)</span><br><span class="line">const UglifyJsPlugin &#x3D; require(&#39;uglifyjs-webpack-plugin&#39;)</span><br><span class="line"></span><br><span class="line">const SkeletonWebpackPlugin &#x3D; require(&#39;vue-skeleton-webpack-plugin&#39;)</span><br><span class="line"></span><br><span class="line">const env &#x3D; process.env.NODE_ENV &#x3D;&#x3D;&#x3D; &#39;testing&#39; ?</span><br><span class="line">    require(&#39;..&#x2F;config&#x2F;test.env&#39;) :</span><br><span class="line">    require(&#39;..&#x2F;config&#x2F;prod.env&#39;)</span><br><span class="line"></span><br><span class="line">const webpackConfig &#x3D; merge(baseWebpackConfig, &#123;</span><br><span class="line">    module: &#123;</span><br><span class="line">        rules: utils.styleLoaders(&#123;</span><br><span class="line">            sourceMap: config.build.productionSourceMap,</span><br><span class="line">            extract: true,</span><br><span class="line">            usePostCSS: true</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;,</span><br><span class="line">    devtool: config.build.productionSourceMap ? config.build.devtool : false,</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: config.build.assetsRoot,</span><br><span class="line">        filename: utils.assetsPath(&#39;js&#x2F;[name].[chunkhash].js&#39;),</span><br><span class="line">        chunkFilename: utils.assetsPath(&#39;js&#x2F;[id].[chunkhash].js&#39;)</span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">        &#x2F;&#x2F; http:&#x2F;&#x2F;vuejs.github.io&#x2F;vue-loader&#x2F;en&#x2F;workflow&#x2F;production.html</span><br><span class="line">        new webpack.DefinePlugin(&#123;</span><br><span class="line">            &#39;process.env&#39;: env</span><br><span class="line">        &#125;),</span><br><span class="line">        new UglifyJsPlugin(&#123;</span><br><span class="line">            uglifyOptions: &#123;</span><br><span class="line">                compress: &#123;</span><br><span class="line">                    warnings: false</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            sourceMap: config.build.productionSourceMap,</span><br><span class="line">            parallel: true</span><br><span class="line">        &#125;),</span><br><span class="line">        &#x2F;&#x2F; extract css into its own file</span><br><span class="line">        new ExtractTextPlugin(&#123;</span><br><span class="line">            filename: utils.assetsPath(&#39;css&#x2F;[name].[contenthash].css&#39;),</span><br><span class="line">            &#x2F;&#x2F; Setting the following option to &#96;false&#96; will not extract CSS from codesplit chunks.</span><br><span class="line">            &#x2F;&#x2F; Their CSS will instead be inserted dynamically with style-loader when the codesplit chunk has been loaded by webpack.</span><br><span class="line">            &#x2F;&#x2F; It&#39;s currently set to &#96;true&#96; because we are seeing that sourcemaps are included in the codesplit bundle as well when it&#39;s &#96;false&#96;, </span><br><span class="line">            &#x2F;&#x2F; increasing file size: https:&#x2F;&#x2F;github.com&#x2F;vuejs-templates&#x2F;webpack&#x2F;issues&#x2F;1110</span><br><span class="line">            allChunks: true,</span><br><span class="line">        &#125;),</span><br><span class="line">        &#x2F;&#x2F; Compress extracted CSS. We are using this plugin so that possible</span><br><span class="line">        &#x2F;&#x2F; duplicated CSS from different components can be deduped.</span><br><span class="line">        new OptimizeCSSPlugin(&#123;</span><br><span class="line">            cssProcessorOptions: config.build.productionSourceMap ? &#123; safe: true, map: &#123; inline: false &#125; &#125; : &#123; safe: true &#125;</span><br><span class="line">        &#125;),</span><br><span class="line">        &#x2F;&#x2F; generate dist index.html with correct asset hash for caching.</span><br><span class="line">        &#x2F;&#x2F; you can customize output by editing &#x2F;index.html</span><br><span class="line">        &#x2F;&#x2F; see https:&#x2F;&#x2F;github.com&#x2F;ampedandwired&#x2F;html-webpack-plugin</span><br><span class="line">        new HtmlWebpackPlugin(&#123;</span><br><span class="line">            filename: process.env.NODE_ENV &#x3D;&#x3D;&#x3D; &#39;testing&#39; ?</span><br><span class="line">                &#39;index.html&#39; : config.build.index,</span><br><span class="line">            template: &#39;index.html&#39;,</span><br><span class="line">            inject: true,</span><br><span class="line">            minify: &#123;</span><br><span class="line">                removeComments: true,</span><br><span class="line">                collapseWhitespace: true,</span><br><span class="line">                removeAttributeQuotes: true</span><br><span class="line">                    &#x2F;&#x2F; more options:</span><br><span class="line">                    &#x2F;&#x2F; https:&#x2F;&#x2F;github.com&#x2F;kangax&#x2F;html-minifier#options-quick-reference</span><br><span class="line">            &#125;,</span><br><span class="line">            &#x2F;&#x2F; necessary to consistently work with multiple chunks via CommonsChunkPlugin</span><br><span class="line">            chunksSortMode: &#39;dependency&#39;</span><br><span class="line">        &#125;),</span><br><span class="line">        &#x2F;&#x2F; keep module.id stable when vendor modules does not change</span><br><span class="line">        new webpack.HashedModuleIdsPlugin(),</span><br><span class="line">        &#x2F;&#x2F; enable scope hoisting</span><br><span class="line">        new webpack.optimize.ModuleConcatenationPlugin(),</span><br><span class="line">        &#x2F;&#x2F; split vendor js into its own file</span><br><span class="line">        new webpack.optimize.CommonsChunkPlugin(&#123;</span><br><span class="line">            name: &#39;vendor&#39;,</span><br><span class="line">            minChunks(module) &#123;</span><br><span class="line">                &#x2F;&#x2F; any required modules inside node_modules are extracted to vendor</span><br><span class="line">                return (</span><br><span class="line">                    module.resource &amp;&amp;</span><br><span class="line">                    &#x2F;\.js$&#x2F;.test(module.resource) &amp;&amp;</span><br><span class="line">                    module.resource.indexOf(</span><br><span class="line">                        path.join(__dirname, &#39;..&#x2F;node_modules&#39;)</span><br><span class="line">                    ) &#x3D;&#x3D;&#x3D; 0</span><br><span class="line">                )</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;),</span><br><span class="line">        &#x2F;&#x2F; extract webpack runtime and module manifest to its own file in order to</span><br><span class="line">        &#x2F;&#x2F; prevent vendor hash from being updated whenever app bundle is updated</span><br><span class="line">        new webpack.optimize.CommonsChunkPlugin(&#123;</span><br><span class="line">            name: &#39;manifest&#39;,</span><br><span class="line">            minChunks: Infinity</span><br><span class="line">        &#125;),</span><br><span class="line">        &#x2F;&#x2F; This instance extracts shared chunks from code splitted chunks and bundles them</span><br><span class="line">        &#x2F;&#x2F; in a separate chunk, similar to the vendor chunk</span><br><span class="line">        &#x2F;&#x2F; see: https:&#x2F;&#x2F;webpack.js.org&#x2F;plugins&#x2F;commons-chunk-plugin&#x2F;#extra-async-commons-chunk</span><br><span class="line">        new webpack.optimize.CommonsChunkPlugin(&#123;</span><br><span class="line">            name: &#39;app&#39;,</span><br><span class="line">            async: &#39;vendor-async&#39;,</span><br><span class="line">            children: true,</span><br><span class="line">            minChunks: 3</span><br><span class="line">        &#125;),</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; copy custom static assets</span><br><span class="line">        new CopyWebpackPlugin([&#123;</span><br><span class="line">            from: path.resolve(__dirname, &#39;..&#x2F;static&#39;),</span><br><span class="line">            to: config.build.assetsSubDirectory,</span><br><span class="line">            ignore: [&#39;.*&#39;]</span><br><span class="line">        &#125;]),</span><br><span class="line">        &#x2F;&#x2F; inject skeleton content(DOM &amp; CSS) into HTML</span><br><span class="line">        new SkeletonWebpackPlugin(&#123;</span><br><span class="line">            webpackConfig: require(&#39;.&#x2F;webpack.skeleton.conf&#39;),</span><br><span class="line">            quiet: true</span><br><span class="line">        &#125;)</span><br><span class="line">    ]</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">if (config.build.productionGzip) &#123;</span><br><span class="line">    const CompressionWebpackPlugin &#x3D; require(&#39;compression-webpack-plugin&#39;)</span><br><span class="line"></span><br><span class="line">    webpackConfig.plugins.push(</span><br><span class="line">        new CompressionWebpackPlugin(&#123;</span><br><span class="line">            asset: &#39;[path].gz[query]&#39;,</span><br><span class="line">            algorithm: &#39;gzip&#39;,</span><br><span class="line">            test: new RegExp(</span><br><span class="line">                &#39;\\.(&#39; +</span><br><span class="line">                config.build.productionGzipExtensions.join(&#39;|&#39;) +</span><br><span class="line">                &#39;)$&#39;</span><br><span class="line">            ),</span><br><span class="line">            threshold: 10240,</span><br><span class="line">            minRatio: 0.8</span><br><span class="line">        &#125;)</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if (config.build.bundleAnalyzerReport) &#123;</span><br><span class="line">    const BundleAnalyzerPlugin &#x3D; require(&#39;webpack-bundle-analyzer&#39;).BundleAnalyzerPlugin</span><br><span class="line">    webpackConfig.plugins.push(new BundleAnalyzerPlugin())</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">module.exports &#x3D; webpackConfig</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>根目录下执行<code>npm run dev</code>，chrome浏览器下调试network为<code>slow 3G</code>模式，<strong>效果⬇</strong><br><img src="/.io//%5Cimages%5Cpic%5Ceg.gif" alt="效果"></p>
+<li><p>根目录下执行<code>npm run dev</code>，chrome浏览器下调试network为<code>slow 3G</code>模式，<strong>效果⬇</strong><br><img src="/images/eg.gif" alt="效果"></p>
 </li>
 </ul>
 <p>另：</p>
 <ul>
-<li>demo源码下载，请戳<a href="https://github.com/fqLiou/skeleton-vueDemo" target="_blank" rel="noopener" title="demo源码下载">这里</a></li>
+<li>demo源码下载，请戳<a href="https://github.com/LukeLiou/skeleton-vueDemo" target="_blank" rel="noopener" title="demo源码下载">这里</a></li>
 </ul>
 
       
@@ -538,7 +538,49 @@
     
 
     
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>赞赏一杯咖啡</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
 
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatCheck.JPG" alt="Luke 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Luke
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://lukeliou.github.io/2018/12/18/2018%E5%B9%B412%E6%9C%8817%E6%97%A5/" title="Vue页面骨架屏注入实践">http://lukeliou.github.io/2018/12/18/2018%E5%B9%B412%E6%9C%8817%E6%97%A5/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
     
 
     <footer class="post-footer">
