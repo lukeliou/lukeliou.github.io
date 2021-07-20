@@ -95,32 +95,143 @@
       </tags>
   </entry>
   <entry>
-    <title>无题</title>
-    <url>/2017/09/26/essay/</url>
-    <content><![CDATA[<p>心灵鸡汤    观多无感    少之无味<br>他们说 生命是周而复始 而我的难题是在一生里如何保有一种如水又如酒的记忆</p>
-<p>生活就是这样子 总不能如诗  </p>
-<a id="more"></a>
-<p>你在《霓虹深处》里说 以为一启程 《途中》便有目的<br>你说想在暮冬时烤雪 在迟夏写长信 “早春不过一棵树”<br>《早春的树》又说 “你只是经过我” 半生的意义如此取舍《来信》烧完</p>
-<p>转眼三旬 谈笑过场</p>
-<p>阅历少的吹嘘自己 真正经历过的</p>
-<p>却说自己背后没故事 仅有一只枕头</p>
-<p>生命如常 工作如常 探亲如常 举杯困倦</p>
-<p>人惶惶 心惶惶</p>
-<p>生命 原是一次又一次的试探</p>
-<p>离合悲欢 圆缺阴晴</p>
-<p>等到花满枝丫 却又别离</p>
-<p>谁说 我们必须老去 必须分离</p>
-<p>请在我身畔 客居一段</p>
-<p>早忘却</p>
-<p>曾壮言”选择远方，吐露忠诚”</p>
-<p>但今朝更倾向活在当下</p>
-<p>一七年九月二十六 凌晨一点一刻</p>
+    <title>uniapp 省市区街道三级四级联动选择器（支持APP、H5、小程序）内附demo</title>
+    <url>/2021/07/20/uniapp-%E7%9C%81%E5%B8%82%E5%8C%BA%E8%A1%97%E9%81%93%E4%B8%89%E7%BA%A7%E5%9B%9B%E7%BA%A7%E8%81%94%E5%8A%A8%E9%80%89%E6%8B%A9%E5%99%A8%EF%BC%88%E6%94%AF%E6%8C%81APP%E3%80%81H5%E3%80%81%E5%B0%8F%E7%A8%8B%E5%BA%8F%EF%BC%89%E5%86%85%E9%99%84demo/</url>
+    <content><![CDATA[<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><ol start="0">
+<li>支持uniapp（APP、H5、小程序）省市区街道三级四级联动</li>
+<li>支持默认地区或已选择地区显示</li>
+<li>数据来源可包括高德地图api、公司封装接口返回<a id="more"></a>
+
+
+</li>
+</ol>
+<h3 id="API"><a href="#API" class="headerlink" title="API"></a>API</h3><h4 id="props"><a href="#props" class="headerlink" title="props"></a>props</h4><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>必填</th>
+<th>说明</th>
+<th>类型</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>areaInfoSelected</td>
+<td>否</td>
+<td>已选择的地址对象或默认显示地址对象，属性有：provinceObj,cityObjareaObj,streetObj</td>
+<td>Object</td>
+<td>{}</td>
+</tr>
+<tr>
+<td>selectAreaLevelLimit</td>
+<td>否</td>
+<td>指定选择的级别数，如只需要选择省市区，则指定值为3</td>
+<td>Number</td>
+<td>4</td>
+</tr>
+</tbody></table>
+<h4 id="events"><a href="#events" class="headerlink" title="events"></a>events</h4><table>
+<thead>
+<tr>
+<th>事件名</th>
+<th>说明</th>
+<th>返回值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>cancel</td>
+<td>点击取消按钮时触发</td>
+<td>-</td>
+</tr>
+<tr>
+<td>confirm</td>
+<td>点击确认按钮时触发</td>
+<td>选中的省市区街道地址对象,包含如下属性：fullAreaText,provinceCode,,cityCode,areaCode,streetCode,provinceObj,cityObj,areaObj,streetObj</td>
+</tr>
+</tbody></table>
+<h3 id="作者想说"><a href="#作者想说" class="headerlink" title="作者想说"></a>作者想说</h3><p>欢迎大家留言、评论与star😈</p>
+<h3 id="dcloud传送门：https-ext-dcloud-net-cn-plugin-id-5671"><a href="#dcloud传送门：https-ext-dcloud-net-cn-plugin-id-5671" class="headerlink" title="dcloud传送门：https://ext.dcloud.net.cn/plugin?id=5671"></a>dcloud传送门：<a href="https://ext.dcloud.net.cn/plugin?id=5671" target="_blank" rel="noopener">https://ext.dcloud.net.cn/plugin?id=5671</a></h3><h3 id="github传送门：https-github-com-LukeLiou-UniappPlugins"><a href="#github传送门：https-github-com-LukeLiou-UniappPlugins" class="headerlink" title="github传送门：https://github.com/LukeLiou/UniappPlugins"></a><a href=""></a><a href=""></a>github传送门：<a href="https://github.com/LukeLiou/UniappPlugins" target="_blank" rel="noopener">https://github.com/LukeLiou/UniappPlugins</a></h3><h3 id="个人博客：https-lukeliou-github-io"><a href="#个人博客：https-lukeliou-github-io" class="headerlink" title="个人博客：https://lukeliou.github.io/"></a><a href=""></a><a href=""></a>个人博客：<a href="https://lukeliou.github.io/">https://lukeliou.github.io/</a></h3><h3 id="效果图："><a href="#效果图：" class="headerlink" title="效果图："></a>效果图：</h3><p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ac2ba89b02c744cf92107ea4a389dbf6~tplv-k3u1fbpfcp-watermark.image" alt="UniAddressSelector_watermark_2.gif"></p>
 ]]></content>
       <categories>
-        <category>生活</category>
+        <category>WebDevelop</category>
       </categories>
       <tags>
-        <tag>随笔</tag>
+        <tag>vue</tag>
+        <tag>uni-app</tag>
+        <tag>plugin</tag>
+        <tag>省市区街道</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ssh连接Linux,命令行部署http-server</title>
+    <url>/2018/11/05/ssh%E8%BF%9E%E6%8E%A5Linux-%E9%83%A8%E7%BD%B2http-server/</url>
+    <content><![CDATA[<p>今晚实践了在ssh连接Linux之后,部署http-server，下面贴出启动步骤：</p>
+<a id="more"></a>
+<h1 id="使用账户名和密码进行ssh连接"><a href="#使用账户名和密码进行ssh连接" class="headerlink" title="使用账户名和密码进行ssh连接"></a>使用账户名和密码进行ssh连接</h1><ul>
+<li><strong>命令⬇</strong><pre>
+  ssh root@xx.xx.xxx.xxx
+</pre></li>
+<li><strong>效果⬇</strong><br><img src="/images/server.png" alt="使用账户名和密码进行ssh连接"></li>
+</ul>
+<h1 id="安装http-server"><a href="#安装http-server" class="headerlink" title="安装http-server"></a>安装http-server</h1><p> 在自己用户权限下，新建一个空文件夹（这里是demo）执行局部安装命令</p>
+<ul>
+<li><strong>命令⬇</strong><pre>npm install http-server</pre>
+此时会生成<code>package.json</code>文件，如果没有，可以用指令<code>npm init –y</code>生成</li>
+<li><strong>效果⬇</strong><br><img src="/images/server2.png" alt="安装http-server"></li>
+</ul>
+<h1 id="编辑package-json-方便使用npm-stat启动服务"><a href="#编辑package-json-方便使用npm-stat启动服务" class="headerlink" title="编辑package.json(方便使用npm stat启动服务)"></a>编辑package.json(方便使用<code>npm stat</code>启动服务)</h1><p> 在自己用户权限下，新建一个空文件夹（这里是demo）执行局部安装命令</p>
+<ul>
+<li><strong>命令⬇</strong><pre>vi package.json</pre>
+修改如下：（8003为自定义端口）<pre>
+  {
+    "name": "demo",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "dependencies": {
+      "http-server": "^0.11.1"
+    },
+    "devDependencies": {},
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "start": "http-server -p 8003"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
+  }
+</pre></li>
+<li><strong>效果⬇</strong><br><img src="/images/server3.png" alt="编辑package.json(方便使用`npm stat`启动服务)"></li>
+</ul>
+<h1 id="使用命令启动服务"><a href="#使用命令启动服务" class="headerlink" title="使用命令启动服务"></a>使用命令启动服务</h1><ul>
+<li><strong>命令⬇</strong><pre>npm start</pre></li>
+<li><strong>效果⬇</strong><br><img src="/images/server4.png" alt="使用命令启动服务"></li>
+</ul>
+<h1 id="打开浏览器，访问域名"><a href="#打开浏览器，访问域名" class="headerlink" title="打开浏览器，访问域名"></a>打开浏览器，访问域名</h1><ul>
+<li><strong>效果⬇</strong><br><img src="/images/server5.png" alt="打开浏览器，访问域名"></li>
+</ul>
+<h1 id="开启后台不断开"><a href="#开启后台不断开" class="headerlink" title="开启后台不断开"></a>开启后台不断开</h1><p>开启成功后，关闭CMD亦能访问服务。</p>
+<ul>
+<li><p><strong>命令⬇</strong></p>
+<pre>nohup npm start &</pre>
+<p>此时生成一个nohup.out文件，获得一个进程ID  20559</p>
+<p>ps:</p>
+<ul>
+<li>我们可以通过<code>ps -ef</code>来查看当前所有进程</li>
+<li><code>kill 20559</code>结束进程</li>
+<li>更多指令请移步Google</li>
+</ul>
+</li>
+<li><p><strong>效果⬇</strong><br><img src="/images/server6.png" alt="使用命令启动服务"></p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Web Develop</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>http-server</tag>
       </tags>
   </entry>
   <entry>
@@ -376,6 +487,42 @@ node_modules/.bin/webpack app/main.js public/bundle.js
       </tags>
   </entry>
   <entry>
+    <title>十年</title>
+    <url>/2015/11/05/%E5%8D%81%E5%B9%B4/</url>
+    <content><![CDATA[<div style="text-align:center;">
+我种了十年玫瑰
+
+<p>拔了十年毒刺</p>
+<a id="more"></a>
+<p>你哪怕摘走一支</p>
+<p>也成了最疼我的</p>
+<p>我采了十年石头</p>
+<p>洗了十年尘土</p>
+<p>你哪怕拾起一颗</p>
+<p>也成了最宠我的</p>
+<p>我砍了十年柴禾</p>
+<p>生了十年篝火</p>
+<p>你哪怕停留片刻</p>
+<p>也成了最暖我的</p>
+<p>我藏了十年秘密</p>
+<p>埋了十年悲伤</p>
+<p>你哪怕问我半句</p>
+<p>也成了最懂我的</p>
+<p>如今你朝我走来</p>
+<p>恰好十年以后</p>
+<p>我已不求你能疼我，宠我</p>
+<p>我也不求你能暖我，懂我</p>
+<p>你哪怕看我一眼</p>
+<p>也成了最爱我的</p>
+</div>]]></content>
+      <categories>
+        <category>生活</category>
+      </categories>
+      <tags>
+        <tag>文集</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>微信小程序-填坑-初级入门（不定期更新）</title>
     <url>/2018/09/16/miniProgram/</url>
     <content><![CDATA[<p>前段时间博主研究了下微信小程序，写了个demo。现在回过头来整理下笔记，记录所遇到的坑。</p>
@@ -486,176 +633,32 @@ app.wxss 设置全局内容样式 .content {background-color: “#CCFF00”}
       </tags>
   </entry>
   <entry>
-    <title>ssh连接Linux,命令行部署http-server</title>
-    <url>/2018/11/05/ssh%E8%BF%9E%E6%8E%A5Linux-%E9%83%A8%E7%BD%B2http-server/</url>
-    <content><![CDATA[<p>今晚实践了在ssh连接Linux之后,部署http-server，下面贴出启动步骤：</p>
+    <title>无题</title>
+    <url>/2017/09/26/essay/</url>
+    <content><![CDATA[<p>心灵鸡汤    观多无感    少之无味<br>他们说 生命是周而复始 而我的难题是在一生里如何保有一种如水又如酒的记忆</p>
+<p>生活就是这样子 总不能如诗  </p>
 <a id="more"></a>
-<h1 id="使用账户名和密码进行ssh连接"><a href="#使用账户名和密码进行ssh连接" class="headerlink" title="使用账户名和密码进行ssh连接"></a>使用账户名和密码进行ssh连接</h1><ul>
-<li><strong>命令⬇</strong><pre>
-  ssh root@xx.xx.xxx.xxx
-</pre></li>
-<li><strong>效果⬇</strong><br><img src="/images/server.png" alt="使用账户名和密码进行ssh连接"></li>
-</ul>
-<h1 id="安装http-server"><a href="#安装http-server" class="headerlink" title="安装http-server"></a>安装http-server</h1><p> 在自己用户权限下，新建一个空文件夹（这里是demo）执行局部安装命令</p>
-<ul>
-<li><strong>命令⬇</strong><pre>npm install http-server</pre>
-此时会生成<code>package.json</code>文件，如果没有，可以用指令<code>npm init –y</code>生成</li>
-<li><strong>效果⬇</strong><br><img src="/images/server2.png" alt="安装http-server"></li>
-</ul>
-<h1 id="编辑package-json-方便使用npm-stat启动服务"><a href="#编辑package-json-方便使用npm-stat启动服务" class="headerlink" title="编辑package.json(方便使用npm stat启动服务)"></a>编辑package.json(方便使用<code>npm stat</code>启动服务)</h1><p> 在自己用户权限下，新建一个空文件夹（这里是demo）执行局部安装命令</p>
-<ul>
-<li><strong>命令⬇</strong><pre>vi package.json</pre>
-修改如下：（8003为自定义端口）<pre>
-  {
-    "name": "demo",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
-    "dependencies": {
-      "http-server": "^0.11.1"
-    },
-    "devDependencies": {},
-    "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1",
-      "start": "http-server -p 8003"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "ISC"
-  }
-</pre></li>
-<li><strong>效果⬇</strong><br><img src="/images/server3.png" alt="编辑package.json(方便使用`npm stat`启动服务)"></li>
-</ul>
-<h1 id="使用命令启动服务"><a href="#使用命令启动服务" class="headerlink" title="使用命令启动服务"></a>使用命令启动服务</h1><ul>
-<li><strong>命令⬇</strong><pre>npm start</pre></li>
-<li><strong>效果⬇</strong><br><img src="/images/server4.png" alt="使用命令启动服务"></li>
-</ul>
-<h1 id="打开浏览器，访问域名"><a href="#打开浏览器，访问域名" class="headerlink" title="打开浏览器，访问域名"></a>打开浏览器，访问域名</h1><ul>
-<li><strong>效果⬇</strong><br><img src="/images/server5.png" alt="打开浏览器，访问域名"></li>
-</ul>
-<h1 id="开启后台不断开"><a href="#开启后台不断开" class="headerlink" title="开启后台不断开"></a>开启后台不断开</h1><p>开启成功后，关闭CMD亦能访问服务。</p>
-<ul>
-<li><p><strong>命令⬇</strong></p>
-<pre>nohup npm start &</pre>
-<p>此时生成一个nohup.out文件，获得一个进程ID  20559</p>
-<p>ps:</p>
-<ul>
-<li>我们可以通过<code>ps -ef</code>来查看当前所有进程</li>
-<li><code>kill 20559</code>结束进程</li>
-<li>更多指令请移步Google</li>
-</ul>
-</li>
-<li><p><strong>效果⬇</strong><br><img src="/images/server6.png" alt="使用命令启动服务"></p>
-</li>
-</ul>
+<p>你在《霓虹深处》里说 以为一启程 《途中》便有目的<br>你说想在暮冬时烤雪 在迟夏写长信 “早春不过一棵树”<br>《早春的树》又说 “你只是经过我” 半生的意义如此取舍《来信》烧完</p>
+<p>转眼三旬 谈笑过场</p>
+<p>阅历少的吹嘘自己 真正经历过的</p>
+<p>却说自己背后没故事 仅有一只枕头</p>
+<p>生命如常 工作如常 探亲如常 举杯困倦</p>
+<p>人惶惶 心惶惶</p>
+<p>生命 原是一次又一次的试探</p>
+<p>离合悲欢 圆缺阴晴</p>
+<p>等到花满枝丫 却又别离</p>
+<p>谁说 我们必须老去 必须分离</p>
+<p>请在我身畔 客居一段</p>
+<p>早忘却</p>
+<p>曾壮言”选择远方，吐露忠诚”</p>
+<p>但今朝更倾向活在当下</p>
+<p>一七年九月二十六 凌晨一点一刻</p>
 ]]></content>
-      <categories>
-        <category>Web Develop</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-        <tag>http-server</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>十年</title>
-    <url>/2015/11/05/%E5%8D%81%E5%B9%B4/</url>
-    <content><![CDATA[<div style="text-align:center;">
-我种了十年玫瑰
-
-<p>拔了十年毒刺</p>
-<a id="more"></a>
-<p>你哪怕摘走一支</p>
-<p>也成了最疼我的</p>
-<p>我采了十年石头</p>
-<p>洗了十年尘土</p>
-<p>你哪怕拾起一颗</p>
-<p>也成了最宠我的</p>
-<p>我砍了十年柴禾</p>
-<p>生了十年篝火</p>
-<p>你哪怕停留片刻</p>
-<p>也成了最暖我的</p>
-<p>我藏了十年秘密</p>
-<p>埋了十年悲伤</p>
-<p>你哪怕问我半句</p>
-<p>也成了最懂我的</p>
-<p>如今你朝我走来</p>
-<p>恰好十年以后</p>
-<p>我已不求你能疼我，宠我</p>
-<p>我也不求你能暖我，懂我</p>
-<p>你哪怕看我一眼</p>
-<p>也成了最爱我的</p>
-</div>]]></content>
       <categories>
         <category>生活</category>
       </categories>
       <tags>
-        <tag>文集</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>uniapp 省市区街道三级四级联动选择器（支持APP、H5、小程序）内附demo</title>
-    <url>/2021/07/20/uniapp-%E7%9C%81%E5%B8%82%E5%8C%BA%E8%A1%97%E9%81%93%E4%B8%89%E7%BA%A7%E5%9B%9B%E7%BA%A7%E8%81%94%E5%8A%A8%E9%80%89%E6%8B%A9%E5%99%A8%EF%BC%88%E6%94%AF%E6%8C%81APP%E3%80%81H5%E3%80%81%E5%B0%8F%E7%A8%8B%E5%BA%8F%EF%BC%89%E5%86%85%E9%99%84demo/</url>
-    <content><![CDATA[<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><ol start="0">
-<li>支持uniapp（APP、H5、小程序）省市区街道三级四级联动</li>
-<li>支持默认地区或已选择地区显示</li>
-<li>数据来源可包括高德地图api、公司封装接口返回</li>
-</ol>
-<h3 id="API"><a href="#API" class="headerlink" title="API"></a>API</h3><h4 id="props"><a href="#props" class="headerlink" title="props"></a>props</h4><table>
-<thead>
-<tr>
-<th>属性</th>
-<th>必填</th>
-<th>说明</th>
-<th>类型</th>
-<th>默认值</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>areaInfoSelected</td>
-<td>否</td>
-<td>已选择的地址对象或默认显示地址对象，属性有：provinceObj,cityObjareaObj,streetObj</td>
-<td>Object</td>
-<td>{}</td>
-</tr>
-<tr>
-<td>selectAreaLevelLimit</td>
-<td>否</td>
-<td>指定选择的级别数，如只需要选择省市区，则指定值为3</td>
-<td>Number</td>
-<td>4</td>
-</tr>
-</tbody></table>
-<h4 id="events"><a href="#events" class="headerlink" title="events"></a>events</h4><table>
-<thead>
-<tr>
-<th>事件名</th>
-<th>说明</th>
-<th>返回值</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>cancel</td>
-<td>点击取消按钮时触发</td>
-<td>-</td>
-</tr>
-<tr>
-<td>confirm</td>
-<td>点击确认按钮时触发</td>
-<td>选中的省市区街道地址对象,包含如下属性：fullAreaText,provinceCode,,cityCode,areaCode,streetCode,provinceObj,cityObj,areaObj,streetObj</td>
-</tr>
-</tbody></table>
-<h3 id="作者想说"><a href="#作者想说" class="headerlink" title="作者想说"></a>作者想说</h3><p>欢迎大家留言、评论与star😈</p>
-<h3 id="dcloud传送门：https-ext-dcloud-net-cn-plugin-id-5671"><a href="#dcloud传送门：https-ext-dcloud-net-cn-plugin-id-5671" class="headerlink" title="dcloud传送门：https://ext.dcloud.net.cn/plugin?id=5671"></a>dcloud传送门：<a href="https://ext.dcloud.net.cn/plugin?id=5671" target="_blank" rel="noopener">https://ext.dcloud.net.cn/plugin?id=5671</a></h3><h3 id="github传送门：https-github-com-LukeLiou-UniappPlugins"><a href="#github传送门：https-github-com-LukeLiou-UniappPlugins" class="headerlink" title="github传送门：https://github.com/LukeLiou/UniappPlugins"></a><a href=""></a><a href=""></a>github传送门：<a href="https://github.com/LukeLiou/UniappPlugins" target="_blank" rel="noopener">https://github.com/LukeLiou/UniappPlugins</a></h3><h3 id="个人博客：https-lukeliou-github-io"><a href="#个人博客：https-lukeliou-github-io" class="headerlink" title="个人博客：https://lukeliou.github.io/"></a><a href=""></a><a href=""></a>个人博客：<a href="https://lukeliou.github.io/">https://lukeliou.github.io/</a></h3><h3 id="效果图："><a href="#效果图：" class="headerlink" title="效果图："></a>效果图：</h3><p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ac2ba89b02c744cf92107ea4a389dbf6~tplv-k3u1fbpfcp-watermark.image" alt="UniAddressSelector_watermark_2.gif"></p>
-]]></content>
-      <categories>
-        <category>WebDevelop</category>
-      </categories>
-      <tags>
-        <tag>vue</tag>
-        <tag>uni-app</tag>
-        <tag>plugin</tag>
-        <tag>省市区街道</tag>
+        <tag>随笔</tag>
       </tags>
   </entry>
 </search>
