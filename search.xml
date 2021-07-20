@@ -95,113 +95,32 @@
       </tags>
   </entry>
   <entry>
-    <title>微信小程序-填坑-初级入门（不定期更新）</title>
-    <url>/2018/09/16/miniProgram/</url>
-    <content><![CDATA[<p>前段时间博主研究了下微信小程序，写了个demo。现在回过头来整理下笔记，记录所遇到的坑。</p>
+    <title>无题</title>
+    <url>/2017/09/26/essay/</url>
+    <content><![CDATA[<p>心灵鸡汤    观多无感    少之无味<br>他们说 生命是周而复始 而我的难题是在一生里如何保有一种如水又如酒的记忆</p>
+<p>生活就是这样子 总不能如诗  </p>
 <a id="more"></a>
-<p>莫急，带我娓娓道来：<br><strong><code>问题详情⬇</code></strong></p>
-<ul>
-<li><h1 id="页面跳转传参数据：json-字符串转对象报错"><a href="#页面跳转传参数据：json-字符串转对象报错" class="headerlink" title="页面跳转传参数据：json 字符串转对象报错"></a>页面跳转传参数据：json 字符串转对象报错</h1><p>小程序的X页面向Y页面跳转的时候，传了页面参数为args（页面参数值只能是字符串，参数值是根据用户点击的信息而不同的），所以传数组或对象需要使用<code>JSON.stringify()</code>转换，到了Y页面需要将param获取到并通过<code>JSON.parse()</code>解析，结果问题是有些传过来json正常解析，有些则报这个错(json 字符串转对象报错)</p>
-</li>
-</ul>
-<p><img src="/images/error.png" alt="json 字符串转对象报错截图"></p>
-<p><strong><code>报错原因⬇</code></strong></p>
-<ul>
-<li>微信小程序限制了页面间跳转传参的长度，导致数据缺失。</li>
-</ul>
-<p><strong><code>解决方法⬇</code></strong></p>
-<ul>
-<li>缩短所需传参的长度 </li>
-<li>通过X页面传一个id到Y页面，然后再重新请求接口获取新数据</li>
-</ul>
-<hr>
-<p><strong><code>问题详情⬇</code></strong></p>
-<ul>
-<li><h1 id="使用wx-for出现如下warning"><a href="#使用wx-for出现如下warning" class="headerlink" title="使用wx:for出现如下warning:"></a>使用wx:for出现如下warning:</h1><pre><code>Now you can provide attr &quot;wx:key&quot; for a &quot;wx:for&quot; to improve performance.</code></pre><p>小程序的X页面向Y页面跳转的时候，传了页面参数为args（页面参数值只能是字符串，参数值是根据用户点击的信息而不同的），所以传数组或对象需要使用<code>JSON.stringify()</code>转换，到了Y页面需要将param获取到并通过<code>JSON.parse()</code>解析，结果问题是有些传过来json正常解析，有些则报这个错(json 字符串转对象报错)</p>
-</li>
-</ul>
-<p><img src="/images/warning.png" alt="json 字符串转对象报错截图"></p>
-<p><strong><code>报错原因⬇</code></strong></p>
-<ul>
-<li><p>官方解释：<br>wx:key<br>如果列表中项目的位置会动态改变或者有新的项目添加到列表中，并且希望列表中的项目保持自己的特征和状态（如 <code>&lt;input/&gt;</code> 中的输入内容，<code>&lt;switch/&gt;</code> 的选中状态），需要使用 wx:key 来指定列表中项目的唯一的标识符。</p>
-</li>
-<li><p>网上资料：<br>wx:key 的值以两种形式提供<br>1、wx:key=”property” 其中property是代表在 for 循环的 array 中 item 的某个 property，该 property 的值需要是列表中唯一的字符串或数字，且不能动态改变。类似于字典的key值<br>2、wx:key=”*this”， 保留关键字 *this 代表在 for 循环中的 item 本身，这种表示需要 item 本身是一个唯一的字符串或者数字，如：当数据改变触发渲染层重新渲染的时候，会校正带有 key 的组件，框架会确保他们被重新排序，而不是重新创建，以确保使组件保持自身的状态，并且提高列表渲染时的效率。<br>注：不添加wx:key情况,会出现问题详情warning，如果明确知道该列表是静态，或者不必关注其顺序，可以选择忽略。</p>
-</li>
-</ul>
-<p><strong><code>解决方法⬇</code></strong></p>
-<ul>
-<li>推荐array 的 每一个item都添加一个唯一识别的property来管理</li>
-</ul>
-<p><strong><code>Eg⬇</code></strong><br>        <text class="new_title" wx:for-items='' wx:key='title'></text></p>
-<hr>
-<p><strong><code>问题详情⬇</code></strong></p>
-<ul>
-<li><h1 id="设置小程序页面各个部分的背景颜色"><a href="#设置小程序页面各个部分的背景颜色" class="headerlink" title="设置小程序页面各个部分的背景颜色"></a>设置小程序页面各个部分的背景颜色</h1></li>
-</ul>
-<p><strong><code>设置如下⬇</code></strong></p>
-<ul>
-<li><p>主体部分：<br><img src="/images/eg.png" alt="json 字符串转对象报错截图"></p>
-<pre>
-app.json -> “window”: {“navigationBarBackgroundColor”: “#EEE”}
-app.json -> “window”: {“backgroundColor”: “#33CCFF”}
-app.wxss 设置全局内容样式 .content {background-color: “#CCFF00”}
-需要说明的是，在微信开发环境中，第2部分（下拉出现的那部分区域）的样式是不起作用的，但在真机上测试就没问题。
-如果要单独设置一个页面的头部样式，就在页面的json文件中设置。注意，与在 app.json 中的写法有点不一样，没有 “window”，例如：
-{
-  "navigationBarTitleText": "个人中心",
-  "navigationBarBackgroundColor": "#0387FE",
-  "navigationBarTextStyle": "white"
-}
-</pre>
-</li>
-<li><p>底部菜单：<br>解决办法是在页面的.wxss里设置（注意，page前没有点）：</p>
-<pre>page { background-color: #fef2dc; }</pre></li>
-<li><p>主体部分：</p>
-<p>在app.json中设置了tarBar，就会出现底部菜单，如下图<br><img src="/images/eg2.png" alt="json 字符串转对象报错截图"></p>
-<p>  底部菜单的背景颜色设置在app.json中：</p>
-<pre>
-"tabBar": {"backgroundColor": "#fff9e9"}
-</pre>
-</li>
-</ul>
-<hr>
-<p><strong><code>问题详情⬇</code></strong></p>
-<ul>
-<li><h1 id="tabBar不能有注释"><a href="#tabBar不能有注释" class="headerlink" title="tabBar不能有注释"></a>tabBar不能有注释</h1><p>tabBar中不能有注释，否则会报错</p>
-</li>
-</ul>
-<p><strong><code>代码详情⬇</code></strong></p>
-<pre>
-    "tabBar": {
-    "selectedColor": "#1296db",    
-    //"selectedColor": "#1296db",
-    "list": [
-        {
-        "pagePath": "pages/news/news",
-        "text":"新闻"
-        },
-        {
-        "pagePath": "pages/index/index",
-        "text":"设置"
-        },
-        {
-        "pagePath": "pages/index/index",
-        "text":"戳我"
-        }
-    ]
-</pre>
-
-<p><strong><code>解决方法⬇</code></strong></p>
-<ul>
-<li>不添加注释</li>
-</ul>
-<hr>
+<p>你在《霓虹深处》里说 以为一启程 《途中》便有目的<br>你说想在暮冬时烤雪 在迟夏写长信 “早春不过一棵树”<br>《早春的树》又说 “你只是经过我” 半生的意义如此取舍《来信》烧完</p>
+<p>转眼三旬 谈笑过场</p>
+<p>阅历少的吹嘘自己 真正经历过的</p>
+<p>却说自己背后没故事 仅有一只枕头</p>
+<p>生命如常 工作如常 探亲如常 举杯困倦</p>
+<p>人惶惶 心惶惶</p>
+<p>生命 原是一次又一次的试探</p>
+<p>离合悲欢 圆缺阴晴</p>
+<p>等到花满枝丫 却又别离</p>
+<p>谁说 我们必须老去 必须分离</p>
+<p>请在我身畔 客居一段</p>
+<p>早忘却</p>
+<p>曾壮言”选择远方，吐露忠诚”</p>
+<p>但今朝更倾向活在当下</p>
+<p>一七年九月二十六 凌晨一点一刻</p>
 ]]></content>
       <categories>
-        <category>Web Develop</category>
+        <category>生活</category>
       </categories>
       <tags>
-        <tag>小程序</tag>
+        <tag>随笔</tag>
       </tags>
   </entry>
   <entry>
@@ -457,32 +376,113 @@ node_modules/.bin/webpack app/main.js public/bundle.js
       </tags>
   </entry>
   <entry>
-    <title>无题</title>
-    <url>/2017/09/26/essay/</url>
-    <content><![CDATA[<p>心灵鸡汤    观多无感    少之无味<br>他们说 生命是周而复始 而我的难题是在一生里如何保有一种如水又如酒的记忆</p>
-<p>生活就是这样子 总不能如诗  </p>
+    <title>微信小程序-填坑-初级入门（不定期更新）</title>
+    <url>/2018/09/16/miniProgram/</url>
+    <content><![CDATA[<p>前段时间博主研究了下微信小程序，写了个demo。现在回过头来整理下笔记，记录所遇到的坑。</p>
 <a id="more"></a>
-<p>你在《霓虹深处》里说 以为一启程 《途中》便有目的<br>你说想在暮冬时烤雪 在迟夏写长信 “早春不过一棵树”<br>《早春的树》又说 “你只是经过我” 半生的意义如此取舍《来信》烧完</p>
-<p>转眼三旬 谈笑过场</p>
-<p>阅历少的吹嘘自己 真正经历过的</p>
-<p>却说自己背后没故事 仅有一只枕头</p>
-<p>生命如常 工作如常 探亲如常 举杯困倦</p>
-<p>人惶惶 心惶惶</p>
-<p>生命 原是一次又一次的试探</p>
-<p>离合悲欢 圆缺阴晴</p>
-<p>等到花满枝丫 却又别离</p>
-<p>谁说 我们必须老去 必须分离</p>
-<p>请在我身畔 客居一段</p>
-<p>早忘却</p>
-<p>曾壮言”选择远方，吐露忠诚”</p>
-<p>但今朝更倾向活在当下</p>
-<p>一七年九月二十六 凌晨一点一刻</p>
+<p>莫急，带我娓娓道来：<br><strong><code>问题详情⬇</code></strong></p>
+<ul>
+<li><h1 id="页面跳转传参数据：json-字符串转对象报错"><a href="#页面跳转传参数据：json-字符串转对象报错" class="headerlink" title="页面跳转传参数据：json 字符串转对象报错"></a>页面跳转传参数据：json 字符串转对象报错</h1><p>小程序的X页面向Y页面跳转的时候，传了页面参数为args（页面参数值只能是字符串，参数值是根据用户点击的信息而不同的），所以传数组或对象需要使用<code>JSON.stringify()</code>转换，到了Y页面需要将param获取到并通过<code>JSON.parse()</code>解析，结果问题是有些传过来json正常解析，有些则报这个错(json 字符串转对象报错)</p>
+</li>
+</ul>
+<p><img src="/images/error.png" alt="json 字符串转对象报错截图"></p>
+<p><strong><code>报错原因⬇</code></strong></p>
+<ul>
+<li>微信小程序限制了页面间跳转传参的长度，导致数据缺失。</li>
+</ul>
+<p><strong><code>解决方法⬇</code></strong></p>
+<ul>
+<li>缩短所需传参的长度 </li>
+<li>通过X页面传一个id到Y页面，然后再重新请求接口获取新数据</li>
+</ul>
+<hr>
+<p><strong><code>问题详情⬇</code></strong></p>
+<ul>
+<li><h1 id="使用wx-for出现如下warning"><a href="#使用wx-for出现如下warning" class="headerlink" title="使用wx:for出现如下warning:"></a>使用wx:for出现如下warning:</h1><pre><code>Now you can provide attr &quot;wx:key&quot; for a &quot;wx:for&quot; to improve performance.</code></pre><p>小程序的X页面向Y页面跳转的时候，传了页面参数为args（页面参数值只能是字符串，参数值是根据用户点击的信息而不同的），所以传数组或对象需要使用<code>JSON.stringify()</code>转换，到了Y页面需要将param获取到并通过<code>JSON.parse()</code>解析，结果问题是有些传过来json正常解析，有些则报这个错(json 字符串转对象报错)</p>
+</li>
+</ul>
+<p><img src="/images/warning.png" alt="json 字符串转对象报错截图"></p>
+<p><strong><code>报错原因⬇</code></strong></p>
+<ul>
+<li><p>官方解释：<br>wx:key<br>如果列表中项目的位置会动态改变或者有新的项目添加到列表中，并且希望列表中的项目保持自己的特征和状态（如 <code>&lt;input/&gt;</code> 中的输入内容，<code>&lt;switch/&gt;</code> 的选中状态），需要使用 wx:key 来指定列表中项目的唯一的标识符。</p>
+</li>
+<li><p>网上资料：<br>wx:key 的值以两种形式提供<br>1、wx:key=”property” 其中property是代表在 for 循环的 array 中 item 的某个 property，该 property 的值需要是列表中唯一的字符串或数字，且不能动态改变。类似于字典的key值<br>2、wx:key=”*this”， 保留关键字 *this 代表在 for 循环中的 item 本身，这种表示需要 item 本身是一个唯一的字符串或者数字，如：当数据改变触发渲染层重新渲染的时候，会校正带有 key 的组件，框架会确保他们被重新排序，而不是重新创建，以确保使组件保持自身的状态，并且提高列表渲染时的效率。<br>注：不添加wx:key情况,会出现问题详情warning，如果明确知道该列表是静态，或者不必关注其顺序，可以选择忽略。</p>
+</li>
+</ul>
+<p><strong><code>解决方法⬇</code></strong></p>
+<ul>
+<li>推荐array 的 每一个item都添加一个唯一识别的property来管理</li>
+</ul>
+<p><strong><code>Eg⬇</code></strong><br>        <text class="new_title" wx:for-items='' wx:key='title'></text></p>
+<hr>
+<p><strong><code>问题详情⬇</code></strong></p>
+<ul>
+<li><h1 id="设置小程序页面各个部分的背景颜色"><a href="#设置小程序页面各个部分的背景颜色" class="headerlink" title="设置小程序页面各个部分的背景颜色"></a>设置小程序页面各个部分的背景颜色</h1></li>
+</ul>
+<p><strong><code>设置如下⬇</code></strong></p>
+<ul>
+<li><p>主体部分：<br><img src="/images/eg.png" alt="json 字符串转对象报错截图"></p>
+<pre>
+app.json -> “window”: {“navigationBarBackgroundColor”: “#EEE”}
+app.json -> “window”: {“backgroundColor”: “#33CCFF”}
+app.wxss 设置全局内容样式 .content {background-color: “#CCFF00”}
+需要说明的是，在微信开发环境中，第2部分（下拉出现的那部分区域）的样式是不起作用的，但在真机上测试就没问题。
+如果要单独设置一个页面的头部样式，就在页面的json文件中设置。注意，与在 app.json 中的写法有点不一样，没有 “window”，例如：
+{
+  "navigationBarTitleText": "个人中心",
+  "navigationBarBackgroundColor": "#0387FE",
+  "navigationBarTextStyle": "white"
+}
+</pre>
+</li>
+<li><p>底部菜单：<br>解决办法是在页面的.wxss里设置（注意，page前没有点）：</p>
+<pre>page { background-color: #fef2dc; }</pre></li>
+<li><p>主体部分：</p>
+<p>在app.json中设置了tarBar，就会出现底部菜单，如下图<br><img src="/images/eg2.png" alt="json 字符串转对象报错截图"></p>
+<p>  底部菜单的背景颜色设置在app.json中：</p>
+<pre>
+"tabBar": {"backgroundColor": "#fff9e9"}
+</pre>
+</li>
+</ul>
+<hr>
+<p><strong><code>问题详情⬇</code></strong></p>
+<ul>
+<li><h1 id="tabBar不能有注释"><a href="#tabBar不能有注释" class="headerlink" title="tabBar不能有注释"></a>tabBar不能有注释</h1><p>tabBar中不能有注释，否则会报错</p>
+</li>
+</ul>
+<p><strong><code>代码详情⬇</code></strong></p>
+<pre>
+    "tabBar": {
+    "selectedColor": "#1296db",    
+    //"selectedColor": "#1296db",
+    "list": [
+        {
+        "pagePath": "pages/news/news",
+        "text":"新闻"
+        },
+        {
+        "pagePath": "pages/index/index",
+        "text":"设置"
+        },
+        {
+        "pagePath": "pages/index/index",
+        "text":"戳我"
+        }
+    ]
+</pre>
+
+<p><strong><code>解决方法⬇</code></strong></p>
+<ul>
+<li>不添加注释</li>
+</ul>
+<hr>
 ]]></content>
       <categories>
-        <category>生活</category>
+        <category>Web Develop</category>
       </categories>
       <tags>
-        <tag>随笔</tag>
+        <tag>小程序</tag>
       </tags>
   </entry>
   <entry>
@@ -591,6 +591,71 @@ node_modules/.bin/webpack app/main.js public/bundle.js
       </categories>
       <tags>
         <tag>文集</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>uniapp 省市区街道三级四级联动选择器（支持APP、H5、小程序）内附demo</title>
+    <url>/2021/07/20/uniapp-%E7%9C%81%E5%B8%82%E5%8C%BA%E8%A1%97%E9%81%93%E4%B8%89%E7%BA%A7%E5%9B%9B%E7%BA%A7%E8%81%94%E5%8A%A8%E9%80%89%E6%8B%A9%E5%99%A8%EF%BC%88%E6%94%AF%E6%8C%81APP%E3%80%81H5%E3%80%81%E5%B0%8F%E7%A8%8B%E5%BA%8F%EF%BC%89%E5%86%85%E9%99%84demo/</url>
+    <content><![CDATA[<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><ol start="0">
+<li>支持uniapp（APP、H5、小程序）省市区街道三级四级联动</li>
+<li>支持默认地区或已选择地区显示</li>
+<li>数据来源可包括高德地图api、公司封装接口返回</li>
+</ol>
+<h3 id="API"><a href="#API" class="headerlink" title="API"></a>API</h3><h4 id="props"><a href="#props" class="headerlink" title="props"></a>props</h4><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>必填</th>
+<th>说明</th>
+<th>类型</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>areaInfoSelected</td>
+<td>否</td>
+<td>已选择的地址对象或默认显示地址对象，属性有：provinceObj,cityObjareaObj,streetObj</td>
+<td>Object</td>
+<td>{}</td>
+</tr>
+<tr>
+<td>selectAreaLevelLimit</td>
+<td>否</td>
+<td>指定选择的级别数，如只需要选择省市区，则指定值为3</td>
+<td>Number</td>
+<td>4</td>
+</tr>
+</tbody></table>
+<h4 id="events"><a href="#events" class="headerlink" title="events"></a>events</h4><table>
+<thead>
+<tr>
+<th>事件名</th>
+<th>说明</th>
+<th>返回值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>cancel</td>
+<td>点击取消按钮时触发</td>
+<td>-</td>
+</tr>
+<tr>
+<td>confirm</td>
+<td>点击确认按钮时触发</td>
+<td>选中的省市区街道地址对象,包含如下属性：fullAreaText,provinceCode,,cityCode,areaCode,streetCode,provinceObj,cityObj,areaObj,streetObj</td>
+</tr>
+</tbody></table>
+<h3 id="作者想说"><a href="#作者想说" class="headerlink" title="作者想说"></a>作者想说</h3><p>欢迎大家留言、评论与star😈</p>
+<h3 id="dcloud传送门：https-ext-dcloud-net-cn-plugin-id-5671"><a href="#dcloud传送门：https-ext-dcloud-net-cn-plugin-id-5671" class="headerlink" title="dcloud传送门：https://ext.dcloud.net.cn/plugin?id=5671"></a>dcloud传送门：<a href="https://ext.dcloud.net.cn/plugin?id=5671" target="_blank" rel="noopener">https://ext.dcloud.net.cn/plugin?id=5671</a></h3><h3 id="github传送门：https-github-com-LukeLiou-UniappPlugins"><a href="#github传送门：https-github-com-LukeLiou-UniappPlugins" class="headerlink" title="github传送门：https://github.com/LukeLiou/UniappPlugins"></a><a href=""></a><a href=""></a>github传送门：<a href="https://github.com/LukeLiou/UniappPlugins" target="_blank" rel="noopener">https://github.com/LukeLiou/UniappPlugins</a></h3><h3 id="个人博客：https-lukeliou-github-io"><a href="#个人博客：https-lukeliou-github-io" class="headerlink" title="个人博客：https://lukeliou.github.io/"></a><a href=""></a><a href=""></a>个人博客：<a href="https://lukeliou.github.io/">https://lukeliou.github.io/</a></h3><h3 id="效果图："><a href="#效果图：" class="headerlink" title="效果图："></a>效果图：</h3><p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ac2ba89b02c744cf92107ea4a389dbf6~tplv-k3u1fbpfcp-watermark.image" alt="UniAddressSelector_watermark_2.gif"></p>
+]]></content>
+      <categories>
+        <category>WebDevelop</category>
+      </categories>
+      <tags>
+        <tag>vue</tag>
+        <tag>uni-app</tag>
+        <tag>plugin</tag>
+        <tag>省市区街道</tag>
       </tags>
   </entry>
 </search>
